@@ -2,3 +2,6 @@ Selecto-env/
 __pycache__/
 .ipynb_checkpoints
 .env
+.sources
+.venv
+db.sqlite3
