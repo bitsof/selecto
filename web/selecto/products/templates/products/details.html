@@ -1,0 +1,8 @@
+<h1>{{ product.product_description }}</h1>
+<ul>
+{% for review in review_list %}
+    <!-- Done to keep url generic instead of hardcoded, looks it up through the name value
+    set earlier in urls section -->
+    <li><a href="{% url 'products:review_details' product.id review.id %}">{{ review.id }}</a></li>
+{% endfor %}
+</ul>
