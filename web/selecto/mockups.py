@@ -5,7 +5,8 @@ import django
 django.setup()
 import sys
 
-from products.models import Product, Review
+from django.utils import timezone
+from products.models import Product, Review, ProductPhoto, Store, StoreLink 
 
 """
 Guide on adding entries through either python shell or python file courtesy of chatGPT:
@@ -25,11 +26,20 @@ input the admin credentials and then there are options to add and delete entries
 """
 
 def generate():
-    description = "A tri-pod with a head that is designed to have smooth movement with pans."
-    name = "Fluid head tri-pod"
-    p = Product(product_description = description, product_name = name)
-    p.save()
+    if len(Product.objects.all()) > 0:
+        print("Already products")
+        return
+    name = ["Fluid head tri-pod", "Other Fluid head tri-pod", "Wheeled tri-pod"]
+    description = ["A tri-pod with a head that is designed to have smooth movement with pans.",
+                   "Another fluid head tri-pod, I guess...",
+                   "A tri-pod with wheels"]
+    products = []
+    for i in range(len(name)):
+        p = Product(product_description = description[i], product_name = name[i])
+        p.save()
     products = Product.objects.all()
+
+    print(len(products), " products added succesfully.")
 
     reviews = ["The \"Fluid head tripod\" seems to be a great product for those looking for a sturdy and reliable tripod with smooth movement. The fluid head design ensures smooth panning, allowing for professional-level camera movements, and the tripod itself is built to be stable and durable." \
 
@@ -37,12 +47,16 @@ def generate():
 
         "In addition to the fluid head, the tripod itself is well-built and designed for stability. It can easily support heavy cameras and lenses, and it is durable enough to withstand frequent use and travel." \
 
-        "Overall, if you're in the market for a reliable tripod with smooth movement, the Fluid Head Tripod is definitely worth considering. Its high-quality construction and professional-grade features make it a great choice for photographers and videographers alike."]
-    
-    for r in reviews:
-        entry = Review(review_content = r, review_related_product = p)
+        "Overall, if you're in the market for a reliable tripod with smooth movement, the Fluid Head Tripod is definitely worth considering. Its high-quality construction and professional-grade features make it a great choice for photographers and videographers alike.",
+        "Do we really need a fluid head tri-pod, it costs too much, and it doesn't help with panning that much",
+        "Another fluid head tri-pod, pretty mid bro no cap.",
+        "Wheels on tri-pods are stupid."]
+    corresponding_product = [0,0,1,2]
+    for i in range(len(reviews)):
+        entry = Review(review_content = reviews[i], review_related_product = products[corresponding_product[i]], review_publish_date=timezone.now())
         entry.save()
-    products = Product.objects.all()
+    print(len(reviews), " reviews added succesfully.")
+
 
 # deletes all entries
 def delete_all():
@@ -50,14 +64,20 @@ def delete_all():
     # deletes all reviews as well, because of setting on_delete=models.CASCADE in the models file
     for p in products:
         p.delete()
+    if len(Product.objects.all()) == 0:
+        print("All products deleted successfully")
+    if len(Review.objects.all()) == 0:
+        print('All reviews deleted succesfully')
 
 # example more than anything useful
 def get_product(id):
     p = Product.objects.get(id = id)
     print(p)
 
+# how to make it possible to run functions on command line e.g. >python mockups.py delete_all
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         globals()[sys.argv[1]]()
+    # if there is a second argument, more an example than anything
     elif len(sys.argv) == 3:
         globals()[sys.argv[1]](sys.argv[2])

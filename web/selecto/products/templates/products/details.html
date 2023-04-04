@@ -1,8 +1,22 @@
-<h1>{{ product.product_description }}</h1>
-<ul>
-{% for review in review_list %}
-    <!-- Done to keep url generic instead of hardcoded, looks it up through the name value
-    set earlier in urls section -->
-    <li><a href="{% url 'products:review_details' product.id review.id %}">{{ review.id }}</a></li>
-{% endfor %}
-</ul>
+{% extends 'products/header.html' %}
+
+{% block content %}
+  <div class="product-details">
+    <h1>{{ product.product_name }}</h1>
+    <p>{{ product.product_description }}</p>
+  </div>
+
+  <div class="reviews">
+    <h2>Reviews</h2>
+    <ul>
+      {% for review in review_list %}
+        <li><a href="{% url 'products:review_details' product.id review.id %}">{{ review.review_content }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="return-link">
+    <a href="{% url 'products:index' %}">&lt;&lt; Return to Products List</a>
+  </div>
+{% endblock %}
+
