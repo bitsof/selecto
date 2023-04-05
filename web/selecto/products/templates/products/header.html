@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Page Title</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		/* Style the body */
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			margin: 0;
+			background-color: #f4f4f4;
+		}
+
+		/* Header/Logo Title */
+		.header {
+			display: flex;
+			align-items: center;
+			padding: 20px;
+			background-color: #031c66;
+			color: #fff;
+			font-size: 32px;
+		}
+
+		.header h1 {
+			margin: 0;
+			font-weight: bold;
+		}
+
+		.header a {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		/* Page Content */
+		.content {
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<h1><a href="{% url 'products:home' %}">Selecto</a></h1>
+	</div>
+
+	<div class="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>
+</html>

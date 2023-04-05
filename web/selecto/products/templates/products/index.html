@@ -1,12 +1,15 @@
 <!-- This, along with any other {} are part of the template language -->
-{% if product_list %} 
-    <ul>
-    {% for product in product_list %}
-        <!-- Done to keep url generic instead of hardcoded, looks it up through the name value
-        set earlier in urls section -->
-        <li><a href="{% url 'products:details' product.id %}">{{ product.product_name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No products are available.</p>
-{% endif %}
+{% extends 'products/header.html' %}
+{% block content %}
+    {% if product_list %} 
+        <ul>
+        {% for product in product_list %}
+            <!-- Done to keep url generic instead of hardcoded, looks it up through the name value
+            set earlier in urls section -->
+            <li><a href="{% url 'products:details' product.id %}">{{ product.product_name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products are available.</p>
+    {% endif %}
+{% endblock %}

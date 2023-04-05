@@ -1,0 +1,22 @@
+{% extends 'products/header.html' %}
+
+{% block content %}
+    <h2>Featured Product</h2>
+    {% if product_list|length > 0 %}
+        <h4><a href="{% url 'products:details' product.id %}">{{ p.product_name }}</a></h4>
+        <p>{{ product.product_description }}</p>
+    {% else %}
+        <p>No product to display</p>
+    {% endif %}
+
+    <h2>Featured Review</h2>
+    {% if review_list|length > 0 %}
+        <h4><a href="{% url 'products:review_details' product.id review.id %}">{{ review.id }}</a></h4>
+        <p>{{ review.review_content }}</p>
+    {% else %}
+        <p>No reviews to display</p>
+    {% endif %}
+
+    <a href="{% url 'products:index' %}"><h2>See All Products</h2></a>
+    
+{% endblock %}
