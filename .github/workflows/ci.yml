@@ -4,6 +4,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+env:
+  PROJECT_ROOT: ${{ github.workspace }}/web/selecto/
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +19,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          cd web/selecto
+          ls $PROJECT_ROOT
+          cd $PROJECT_ROOT/web/selecto
           pip install -r requirements.txt
       - name: Run tests
         run: |
