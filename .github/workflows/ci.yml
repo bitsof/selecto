@@ -19,6 +19,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: check things
         run: ls $PROJECT_ROOT
+        echo: true
       - name: Install dependencies
         run: |
           cd $PROJECT_ROOT/web/selecto
