@@ -7,3 +7,9 @@ run:
 # Apply database migrations
 migrate:
 	python web/selecto/manage.py migrate
+
+install:
+	pip install -r web/selecto/requirements.txt
+
+test:
+	pytest -k web/selecto/

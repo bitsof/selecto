@@ -17,14 +17,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: check things
-        run: ls $PROJECT_ROOT
-        shell: bash
       - name: Install dependencies
-        run: |
-          cd $PROJECT_ROOT/web/selecto
-          pip install -r requirements.txt
+        run: make install
       - name: Run tests
-        run: |
-          cd web/selecto
-          pytest
+        run: make test
