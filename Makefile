@@ -12,4 +12,4 @@ install:
 	pip install -r web/selecto/requirements.txt
 
 test:
-	pytest -k web/selecto/
+	pytest -k web/selecto/tests/
