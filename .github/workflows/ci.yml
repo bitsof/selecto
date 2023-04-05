@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main]
 env:
-  PROJECT_ROOT: ${{ github.workspace }}/web/selecto/
+  PROJECT_ROOT: ${{ github.workspace }}
 jobs:
   build:
     runs-on: ubuntu-latest
