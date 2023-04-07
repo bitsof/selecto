@@ -24,7 +24,6 @@ settings.configure(
         "django.contrib.sessions",
         "django.contrib.admin",
         "products.apps.ProductsConfig",
-        "homepage.apps.HomepageConfig",
     ],
     ROOT_URLCONF="selecto.urls",
 )
