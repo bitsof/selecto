@@ -4,9 +4,9 @@ from django.template import loader
 from .models import Product, Review
 from random import randint
 import openai
-from key import OPENAI_API_KEY
+#from key import OPENAI_API_KEY
 
-openai.api_key = OPENAI_API_KEY
+openai.api_key = '' #OPENAI_API_KEY
 
 # Create your views here.
 
@@ -85,4 +85,8 @@ def review_details(request, product_id, review_id):
     }
     return render(request, 'products/review_details.html', context)
 
+def about_us(request):
+    template = loader.get_template('products/about_us.html')
+
+    return render(request, 'products/about_us.html')
 
