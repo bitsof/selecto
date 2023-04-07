@@ -1,15 +1,59 @@
 <!-- This, along with any other {} are part of the template language -->
+
+<style>
+    .product-list ul {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .product-list li {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    .product-list a {
+      text-decoration: none;
+      color: #000;
+    }
+    
+    .product-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .product-description {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+    
+    </style>
+
 {% extends 'products/header.html' %}
+
 {% block content %}
+    <div class="product-list">
     {% if product_list %} 
         <ul>
         {% for product in product_list %}
+            <li>
             <!-- Done to keep url generic instead of hardcoded, looks it up through the name value
             set earlier in urls section -->
-            <li><a href="{% url 'products:details' product.id %}">{{ product.product_name }}</a></li>
+            <a href="{% url 'products:details' product.id %}">
+                <div class="product-name">{{ product.product_name }}</div>
+                <div class="product-description">{{ product.product_description }}</div>
+            </a>
+            </li>
         {% endfor %}
         </ul>
     {% else %}
         <p>No products are available.</p>
     {% endif %}
+    </div>
 {% endblock %}
