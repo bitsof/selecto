@@ -4,9 +4,14 @@ from django.template import loader
 from .models import Product, Review
 from random import randint
 import openai
-#from key import OPENAI_API_KEY
 
-openai.api_key = '' #OPENAI_API_KEY
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Create your views here.
 
