@@ -30,4 +30,7 @@ def review_details(request, product_id, review_id):
     }
     return render(request, 'products/review_details.html', context)
 
+def test(request):
+    return HttpResponse('test')
+
 
