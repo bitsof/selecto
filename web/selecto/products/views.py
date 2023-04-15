@@ -95,3 +95,7 @@ def about_us(request):
 
     return render(request, 'products/about_us.html')
 
+def signup(request):
+    template = loader.get_template('products/signup.html')
+
+    return render(request, 'products/signup.html')

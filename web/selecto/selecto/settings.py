@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'allauth',    
+    'allauth.account'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "selecto.urls"
 
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'APP': {
+            'client_id': '346274026833-hh4q5c2artcljilfd3cob1pdssciqs2r.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -63,6 +81,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'allauth.account.context_processors.account',
+                'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
@@ -80,6 +100,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 
 
 # Password validation
