@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth import logout
 from .models import Product, Review
 from random import randint
 import openai
@@ -94,6 +95,10 @@ def about_us(request):
     template = loader.get_template('products/about_us.html')
 
     return render(request, 'products/about_us.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
 
 def signup(request):
     template = loader.get_template('products/signup.html')
