@@ -103,6 +103,10 @@ def logout_view(request):
     logout(request)
     return redirect("/")
 
+def login(request):
+    template = loader.get_template('products/login.html')
+    return render(request, 'products/login.html')
+
 def signup(request):
     template = loader.get_template('products/signup.html')
 
