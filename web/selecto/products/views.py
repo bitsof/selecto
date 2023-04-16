@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth import logout
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 from .models import Product, Review
+from .forms import CustomUserCreationForm
 from random import randint
 import openai
 
@@ -104,3 +107,29 @@ def signup(request):
     template = loader.get_template('products/signup.html')
 
     return render(request, 'products/signup.html')
+
+class SignUpView(CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'products/signup.html'
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse({
+                'success': False,
+                'errors': form.errors.as_text(),
+            }, status=400)
+        else:
+            return response
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.is_ajax():
+            return JsonResponse({
+                'success': True,
+                'redirect': self.success_url,
+            })
+        else:
+            return response
+

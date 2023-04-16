@@ -3,13 +3,42 @@
 {% block content %}
     <div class="account_signup">
         <h2>Sign Up</h2>
-        <form method="post" action="{% url 'account_signup' %}">
+        <form id="signup-form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Sign Up</button>
+        <button id="signup-button" type="submit">Sign Up</button>
         </form>
         <p>or</p>
         {% load socialaccount %} 
         <a href="{% provider_login_url 'google' process='login' %}?next={{ request.GET.next|urlencode }}}">Log in with Google</a>
     </div>
+
+    <script>
+        const form = document.querySelector('#signup-form');
+        const button = document.querySelector('#signup-button');
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            submitForm();
+        });
+
+        async function submitForm() {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: new FormData(form)
+            });
+            const data = await response.json();
+            handleResponse(data);
+        }
+
+        function handleResponse(data) {
+            if (data.success) {
+                // Form was successfully submitted, redirect to success page
+                window.location.href = data.redirect;
+            } else {
+                // Display error message to user
+                const errors = document.querySelector('#signup-errors');
+                errors.textContent = data.errors;
+            }
+        }
+    </script>
 {% endblock %}
