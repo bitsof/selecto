@@ -64,6 +64,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
+        'OAUTH_PKCE_ENABLED': True,
         'APP': {
             'client_id': '346274026833-hh4q5c2artcljilfd3cob1pdssciqs2r.apps.googleusercontent.com',
             'secret': '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',
@@ -83,8 +84,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'allauth.account.context_processors.account',
-                'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
