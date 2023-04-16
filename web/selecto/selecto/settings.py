@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -66,8 +69,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'access_type': 'online'},
         'OAUTH_PKCE_ENABLED': True,
         'APP': {
-            'client_id': '346274026833-hh4q5c2artcljilfd3cob1pdssciqs2r.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': os.getenv('CLIENT_ID'),
+            'secret': os.getenv('SECRET_KEY'),
             'key': ''
         }
     }
