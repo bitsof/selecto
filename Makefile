@@ -2,7 +2,7 @@
 
 # Run the development web server
 run:
-	python web/selecto/manage.py runserver 8080
+	python web/selecto/manage.py runserver 8000
 
 # Apply database migrations
 migrate:
