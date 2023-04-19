@@ -13,3 +13,7 @@ install:
 
 test:
 	pytest -rs web/selecto/tests/
+
+# Initalize db
+init_db:
+	python web/selecto/manage.py init_db

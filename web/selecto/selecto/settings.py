@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "137.184.178.55", "selecto.pro", "www
 # Application definition
 
 INSTALLED_APPS = [
-    "products.apps.ProductsConfig",
+    "products",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
