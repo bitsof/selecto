@@ -27,7 +27,6 @@ SECRET_KEY = "django-insecure-)k4%*91+#l2xekl!c-#area#5(tum20t9mj%g3gymw8hdld0ws
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "137.184.178.55", "selecto.pro", "www.selecto.pro", "http://www.selecto.pro", "https://www.selecto.pro"]
-
 # Application definition
 
 INSTALLED_APPS = [
