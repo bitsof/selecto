@@ -1,0 +1,45 @@
+[
+    {
+      "model": "products.product",
+      "pk": 1,
+      "fields": {
+        "product_name": "Sample Product",
+        "product_description": "This is a sample product description."
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 1,
+      "fields": {
+        "review_content": "This is a sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2023-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.productphoto",
+      "pk": 1,
+      "fields": {
+        "photo_url": "https://example.com/sample-product-photo.jpg",
+        "photo_related_product": 1
+      }
+    },
+    {
+      "model": "products.store",
+      "pk": 1,
+      "fields": {
+        "store_name": "Sample Store",
+        "store_url_home": "https://example.com/sample-store"
+      }
+    },
+    {
+      "model": "products.storelink",
+      "pk": 1,
+      "fields": {
+        "store_link_url": "https://example.com/sample-product-store-link",
+        "store_link_related_product": 1,
+        "store_link_store": 1
+      }
+    }
+  ]
+  
