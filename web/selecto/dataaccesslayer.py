@@ -23,7 +23,6 @@ def get_all_products():
     return Product.objects.all()
 
 # gets all products that matches name
-# for example get_all_products('tripod') would return all products with tripod in the name or description
 def get_all_products_by_name(name):
     return
 
@@ -34,9 +33,4 @@ def get_product_by_id(id):
 def get_product_by_name(name):
     return
 
-# also write functions to create, get, and delete review, productphoto, store, and store link
-# for the review function make, if there is no time zone included make it to default to timezone.now()
-# also write get functions for each of the types of models, for fields that make sense. You should
-# write different functions for getting something for each field that makes sense, instead of overloading
-# the function.
 
