@@ -18,19 +18,19 @@ def delete_product(product):
     product.delete()
     return
 
+def delete_product_by_id(id):
+    p = Product.objects.get(id = id)
+    p.delete()
+    return
+
 # returns a list of all products
 def get_all_products():
     return Product.objects.all()
 
 # gets all products that matches name
 def get_all_products_by_name(name):
-    return
+    return Product.objects.filter(name = name)
 
 def get_product_by_id(id):
     p = Product.objects.get(id = id)
     return p
-
-def get_product_by_name(name):
-    return
-
-
