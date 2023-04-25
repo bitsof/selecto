@@ -104,8 +104,11 @@ def logout_view(request):
     return redirect("/")
 
 def login(request):
+    context = {
+        'client_id':os.getenv('CLIENT_ID')
+    }
     template = loader.get_template('products/login.html')
-    return render(request, 'products/login.html')
+    return render(request, 'products/login.html', context)
 
 def signup(request):
     template = loader.get_template('products/signup.html')

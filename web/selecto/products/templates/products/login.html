@@ -1,1 +1,33 @@
 {% extends 'products/header.html' %}
+
+{% block extra_head %}
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        .signin-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* set the height of the container to fill the viewport */
+            margin-top: -150px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="signin-container">
+      <div id="g_id_onload"
+         data-client_id='{{ client_id }}'
+         data-login_uri="http://localhost:8000/login"
+         data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="signin_with"
+         data-shape="square"
+         data-width=300
+         data-logo_alignment="center">
+      </div>
+    </div>
+{% endblock %}
