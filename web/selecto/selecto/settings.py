@@ -69,8 +69,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'access_type': 'online'},
         'OAUTH_PKCE_ENABLED': True,
         'APP': {
-            'client_id': os.getenv('CLIENT_ID'),
-            'secret': os.getenv('SECRET_KEY'),
+            'google_client_id': os.getenv('GOOGLE_CLIENT_ID'),
+            'google_secret': os.getenv('GOOGLE_SECRET_KEY'),
             'key': ''
         }
     }
