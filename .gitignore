@@ -1,4 +1,4 @@
-Selecto-env/
+myenv/
 __pycache__/
 .ipynb_checkpoints
 .env
