@@ -30,12 +30,12 @@ SECRET_KEY = "django-insecure-)k4%*91+#l2xekl!c-#area#5(tum20t9mj%g3gymw8hdld0ws
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "137.184.178.55", "selecto.pro", "www.selecto.pro", "http://www.selecto.pro", "https://www.selecto.pro"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "137.184.178.55", "selecto.pro", "www.selecto.pro", "http://www.selecto.pro", "https://www.selecto.pro"]
 
 # Application definition
 
 INSTALLED_APPS = [
-    "products.apps.ProductsConfig",
+    "products",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -69,8 +69,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'access_type': 'online'},
         'OAUTH_PKCE_ENABLED': True,
         'APP': {
-            'client_id': os.getenv('CLIENT_ID'),
-            'secret': os.getenv('SECRET_KEY'),
+            'google_client_id': os.getenv('GOOGLE_CLIENT_ID'),
+            'google_secret': os.getenv('GOOGLE_SECRET_KEY'),
             'key': ''
         }
     }
