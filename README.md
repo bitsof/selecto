@@ -6,6 +6,11 @@ Selecto is a Python webproject which makes it easy to filter and search for vari
 # Getting Started
 This project is built using tox. This allows us to build in both Unix and Windows enviroments. To run tox, please follow the below instructions:
 
+## Environment Variables
+We current have two files: `web/selecto/resources/dev.env` and ` web/selecto/resources/prod.env` which are used to store credentials.
+Please use the `web/selecto/resources/template.env` file as an example to produce these two files.
+Ask the other team members for our creds. We need to use these for testing and deployment for our app.
+
 ## Setup virtual environment
 Here is an example on using venv.
 1. Please up the terminal and naviate to the project root directory. Then run this command to setup your venv environment.
