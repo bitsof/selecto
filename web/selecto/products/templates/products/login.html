@@ -1,6 +1,7 @@
 {% extends 'products/header.html' %}
 
 {% block extra_head %}
+    <meta name="referrer" content="no-referrer-when-downgrade" />    
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         .signin-container {
@@ -8,29 +9,90 @@
             justify-content: center;
             align-items: center;
             height: 100vh; /* set the height of the container to fill the viewport */
-            margin-top: -150px;
+            flex-direction: column;
+            box-sizing: border-box;
+            width: 100%;
+            margin-top: -100px;
+        }
+
+        .container {
+            box-sizing: border-box;
+            border: 0.5px solid rgb(164, 162, 162);
+            background-color: #fff;
+            padding: 20px;
+            max-width: 300px;
+            margin-top: 20px;
+            border-radius: 3px;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
         }
     </style>
 {% endblock %}
 
 {% block content %}
-    <div class="signin-container">
-      <div id="g_id_onload"
-         data-client_id='{{ google_client_id }}'
-         data-context="signin"
-         data-ux_mode="popup"
-         data-login_uri="http://localhost:8000/login/"
-         data-nonce=""
-         data-auto_prompt="false">
-      </div>
-      <div class="g_id_signin"
-         data-type="standard"
-         data-size="large"
-         data-theme="outline"
-         data-text="signin_with"
-         data-shape="square"
-         data-width=300
-         data-logo_alignment="center">
-      </div>
+    <div class="viewport-container">    
+        <div class="signin-container">
+            <div id="g_id_onload"
+               data-client_id='{{ google_client_id }}'
+               data-context="signin"
+               data-ux_mode="popup"
+               data-login_uri='{{ host_name }}'
+               data-nonce=""
+               data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+               data-type="standard"
+               data-size="large"
+               data-theme="outline"
+               data-text="signin_with"
+               data-shape="square"
+               data-width=300
+               data-logo_alignment="center">
+            </div>
+            <div class="container">
+              <form method="POST" action="login.php">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" name="submit">Login</button>
+                
+              </form>
+            </div>
+          </div>
     </div>
 {% endblock %}
