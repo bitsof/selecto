@@ -49,5 +49,5 @@ Here is an example on using venv.
 ## Run server
 1. To run the server, please use 
     ```
-    tox -e run
+    tox -e runserver
     ```
