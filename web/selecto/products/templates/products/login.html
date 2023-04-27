@@ -16,12 +16,11 @@
 {% block content %}
     <div class="signin-container">
       <div id="g_id_onload"
-<<<<<<< HEAD
-         data-client_id='{{ client_id }}'
-=======
          data-client_id='{{ google_client_id }}'
->>>>>>> d52f519e6e9072e6ed76d1ef2012d3726ec099f1
-         data-login_uri="http://localhost:8000/login"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-login_uri="http://localhost:8000/login/"
+         data-nonce=""
          data-auto_prompt="false">
       </div>
       <div class="g_id_signin"
