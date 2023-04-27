@@ -1,9 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
+from django.contrib.auth import logout
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 from .models import Product, Review
+from .forms import CustomUserCreationForm
 from random import randint
 import openai
+
 from dotenv import load_dotenv
 import os
 
@@ -90,3 +95,50 @@ def review_details(request, product_id, review_id):
 def contact_us(request):
     templete = loader.get_template('products/contact_us.html')
     return render(request, 'products/contact_us.html', {})
+
+def about_us(request):
+    template = loader.get_template('products/about_us.html')
+
+    return render(request, 'products/about_us.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
+
+def login(request):
+    context = {
+        'google_client_id':os.getenv('GOOGLE_CLIENT_ID')
+    }
+    template = loader.get_template('products/login.html')
+    return render(request, 'products/login.html', context)
+
+def signup(request):
+    template = loader.get_template('products/signup.html')
+
+    return render(request, 'products/signup.html')
+
+class SignUpView(CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'products/signup.html'
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse({
+                'success': False,
+                'errors': form.errors.as_text(),
+            }, status=400)
+        else:
+            return response
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.is_ajax():
+            return JsonResponse({
+                'success': True,
+                'redirect': self.success_url,
+            })
+        else:
+            return response
+
