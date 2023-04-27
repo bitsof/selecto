@@ -25,12 +25,44 @@ def delete_product_by_id(id):
 
 # returns a list of all products
 def get_all_products():
-    return Product.objects.all()
+    products = Product.objects.all()
+    return products
 
 # gets all products that matches name
 def get_all_products_by_name(name):
-    return Product.objects.filter(name = name)
+    products = Product.objects.filter(product_name = name)
+    return products
 
 def get_product_by_id(id):
     p = Product.objects.get(id = id)
     return p
+
+def make_product_photo(url, product):
+    photo = ProductPhoto(photo_url = url, photo_related_product = product)
+    photo.save()
+    return photo
+
+def delete_product_photo(photo):
+    photo.delete()
+    return
+
+def delete_product_photo_by_id(photo_id):
+    photo = ProductPhoto.objects.get(id = photo_id)
+    photo.delete()
+    return
+
+def get_product_photo_by_id(photo_id):
+    photo = ProductPhoto.objects.get(id = photo_id)
+    return photo
+
+def get_product_photo_by_url(url):
+    photo = ProductPhoto.objects.get(photo_url = url)
+    return photo
+
+def get_all_product_photos():
+    product_photos = ProductPhoto.objects.all()
+    return product_photos
+
+def get_all_product_photos_by_product(product):
+    photos = ProductPhoto.objects.filter(photo_related_product = product)
+    return photos
