@@ -11,9 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
-import os
-load_dotenv()
+from config import DEBUG_SETTING, DJANGO_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,10 +23,10 @@ SITE_ID = 1
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-)k4%*91+#l2xekl!c-#area#5(tum20t9mj%g3gymw8hdld0ws"
+SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG_SETTING
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "137.184.178.55", "selecto.pro", "www.selecto.pro", "http://www.selecto.pro", "https://www.selecto.pro"]
 
@@ -70,8 +68,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'access_type': 'online'},
         'OAUTH_PKCE_ENABLED': True,
         'APP': {
-            'google_client_id': os.getenv('GOOGLE_CLIENT_ID'),
-            'google_secret': os.getenv('GOOGLE_SECRET_KEY'),
+            'google_client_id': GOOGLE_CLIENT_ID,
+            'google_secret': GOOGLE_SECRET_KEY,
             'key': ''
         }
     }
