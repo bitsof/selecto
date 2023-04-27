@@ -41,10 +41,8 @@ def home(request):
 def index(request):
     product_list = Product.objects.all()
     template = loader.get_template('products/index.html')
-    test_string = "TEsting string"
     context = {
         'product_list': product_list,
-        'test' : test_string,
     }
     return render(request, 'products/index.html', context)
 
@@ -89,4 +87,6 @@ def review_details(request, product_id, review_id):
     }
     return render(request, 'products/review_details.html', context)
 
-
+def contact_us(request):
+    templete = loader.get_template('products/contact_us.html')
+    return render(request, 'products/contact_us.html', {})
