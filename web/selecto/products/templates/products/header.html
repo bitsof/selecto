@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title>Page Title</title>
+	{% block extra_head %}{% endblock %}
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
@@ -90,8 +91,8 @@
 		<button class="dropbtn">&#9776;</button>
 		<div class="dropdown-content">
 			<a href="{% url 'products:index' %}">Index</a>
-			<a href="#">Link 2</a>
-			<a href="#">Link 3</a>
+			<a href="{% url 'products:login' %}">Log In</a>
+			<a href="{% url 'products:signup'%}">Register</a>
 		</div>
 		</div>
 	</div>
@@ -106,7 +107,7 @@
 			<p>&copy; 2023 Selecto. All Rights Reserved.</p>
 		</div>
 		<div>
-			<p><a href="#">About Us</a> | <a href="#">Contact Us</a></p>
+			<p><a href="{% url 'products:about_us' %}">About Us</a> | <a href="{% url 'products:contact_us' %}">Contact Us</a></p>
 		</div>
 	</div>
 </body>

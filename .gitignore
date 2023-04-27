@@ -1,4 +1,4 @@
-Selecto-env/
+myenv/
 __pycache__/
 .ipynb_checkpoints
 .env
@@ -6,3 +6,7 @@ __pycache__/
 .venv
 db.sqlite3
 /venv
+.DS_Store
+.idea
+.vscode
+*.env

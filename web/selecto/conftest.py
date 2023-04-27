@@ -28,6 +28,10 @@ import pytest
 #     ROOT_URLCONF="selecto.urls",
 # )
 
+
+def pytest_sessionstart(session):
+    import config
+
 # Load any fixtures you need for all your tests
 pytest.fixture(autouse=True)
 def enable_db_access_for_all_tests(db):
