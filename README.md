@@ -29,20 +29,20 @@ Here is an example on using venv.
     ```
 3. Run the commands specified in the tox.ini file using the following syntax:
     ```
-    tox <command>
+    tox -e <command>
     ```
     Replace <command> with the desired command from the tox.ini file, such as run, migrate, install, test, or init_db.
 
 ## Initalize DB
 1. Run the commands 
     ```
-    tox install
-    tox init_db
+    tox -e install
+    tox -e init_db
     ```
     This will initalize the db so that you can run the server.
 
 ## Run server
 1. To run the server, please use 
     ```
-    tox run
+    tox -e run
     ```

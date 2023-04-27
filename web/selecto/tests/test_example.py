@@ -1,5 +1,6 @@
 import pytest
 from django.urls import reverse
+import config
 
 @pytest.mark.django_db
 def test_example(client):
