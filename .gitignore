@@ -6,3 +6,6 @@ __pycache__/
 .venv
 db.sqlite3
 /venv
+.DS_Store
+.idea
+.vscode

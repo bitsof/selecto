@@ -7,15 +7,8 @@ from django.urls import reverse_lazy
 from .models import Product, Review
 from .forms import CustomUserCreationForm
 from random import randint
-import openai
-
-from dotenv import load_dotenv
-import os
-
-# Load environment variables from .env file
-load_dotenv()
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
+from config import GOOGLE_CLIENT_ID
+from . import openai_module
 
 # Create your views here.
 
@@ -66,25 +59,14 @@ def review_details(request, product_id, review_id):
     summary = ''
     definition = ''
     if(request.GET.get('define')):
-        response = openai.Completion.create(
-            model="text-curie-001",
-            prompt="Define: " + str(request.GET.get('mytextbox')),
-            temperature=0.6
-        )
-        definition = response.choices[0].text
+        response, definition = openai_module.define(request.GET.get('mytextbox'))
         print(response)
         print(response.choices)
     if(request.GET.get('summarize')):
-       response = openai.Completion.create(
-            model="text-curie-001",
-            max_tokens=1024,
-            prompt="Summarize: " + str(review.review_content),
-            temperature=0.6
-        )
+       response, summary = openai_module.summarize(review.review_content)
        print("Response : ", response.choices[0].text)
        print(response)
        print(response.choices)
-       summary = response.choices[0].text
     context = {
         'review' : review,
         'definition' : definition,
@@ -107,7 +89,7 @@ def logout_view(request):
 
 def login(request):
     context = {
-        'google_client_id':os.getenv('GOOGLE_CLIENT_ID')
+        'google_client_id':GOOGLE_CLIENT_ID
     }
     template = loader.get_template('products/login.html')
     return render(request, 'products/login.html', context)
