@@ -89,7 +89,8 @@ def logout_view(request):
 
 def login(request):
     context = {
-        'google_client_id':GOOGLE_CLIENT_ID
+        'google_client_id':GOOGLE_CLIENT_ID,
+        'host_name':'http://localhost:8000/login/'
     }
     template = loader.get_template('products/login.html')
     return render(request, 'products/login.html', context)
