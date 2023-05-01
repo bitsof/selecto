@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from config import DEBUG_SETTING, DJANGO_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY
+from config import DEBUG_SETTING, DJANGO_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY, POSTGRESQL_PW
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -101,6 +101,14 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+    },
+    'users': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'selecto_users_db',
+        'USER': 'kevin',
+        'PASSWORD': POSTGRESQL_PW,
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

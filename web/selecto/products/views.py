@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
-from django.contrib.auth import logout
-from django.views.generic.edit import CreateView
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
 from .models import Product, Review
-from .forms import CustomUserCreationForm
+from .forms import SignUpForm
 from random import randint
 from config import GOOGLE_CLIENT_ID
 from . import openai_module
@@ -96,32 +97,28 @@ def login(request):
     return render(request, 'products/login.html', context)
 
 def signup(request):
-    template = loader.get_template('products/signup.html')
-
-    return render(request, 'products/signup.html')
-
-class SignUpView(CreateView):
-    form_class = CustomUserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'products/signup.html'
-
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        if self.request.is_ajax():
-            return JsonResponse({
-                'success': False,
-                'errors': form.errors.as_text(),
-            }, status=400)
-        else:
-            return response
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        if self.request.is_ajax():
-            return JsonResponse({
-                'success': True,
-                'redirect': self.success_url,
-            })
-        else:
-            return response
-
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            # additional validation for username and email
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            if User.objects.filter(username=username).exists():
+                form.add_error('username', 'Username already exists')
+                return render(request, 'signup.html', {'form': form})
+            if User.objects.filter(email=email).exists():
+                form.add_error('email', 'Email already exists')
+                return render(request, 'signup.html', {'form': form})
+            # set user password and save
+            password = form.cleaned_data.get('password1')
+            user.set_password(password)
+            user.save()
+            # authenticate and login user
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            # redirect to success page
+            return redirect('success')
+    else:
+        form = SignUpForm()
+    return render(request, 'products/signup.html', {'form': form})

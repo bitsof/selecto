@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import SignUpView
+
 
 app_name = 'products'
 urlpatterns = [
@@ -13,5 +13,5 @@ urlpatterns = [
     path('about_us/', views.about_us, name='about_us'),
     path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('signup/', SignUpView.as_view(), name='signup'),
+    path('signup/', views.signup, name='signup'),
 ]
