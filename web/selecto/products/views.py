@@ -99,7 +99,7 @@ def logout_view(request):
 
 def login(request):
     context = {
-        'page_name' : 'Selecto',
+        'page_title' : 'Selecto - Log In',
         'google_client_id':GOOGLE_CLIENT_ID,
         'host_name':'http://localhost:8000/login/'
     }
@@ -109,7 +109,7 @@ def login(request):
 def signup(request):
     template = loader.get_template('products/signup.html')
     context = {
-        'page_name' : 'Selecto',
+        'page_title' : 'Selecto - Sign Up',
     }
     return render(request, 'products/signup.html', context)
 
