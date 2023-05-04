@@ -50,7 +50,7 @@ def details(request, product_id):
     product = Product.objects.get(id=product_id)
     review_list = Review.objects.filter(review_related_product = product)
     template = loader.get_template('products/details.html')
-    page_title = 'Selecto - ' + product.product_description
+    page_title = 'Selecto - ' + product.product_name
     context = {
         'page_title' : page_title,
         'product': product, 'review_list' : review_list,
