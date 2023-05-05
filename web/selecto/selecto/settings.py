@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'allauth',    
     'allauth.account',
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.google"
+    "allauth.socialaccount.providers.google",
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,7 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL =  "/"
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
