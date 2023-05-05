@@ -29,7 +29,7 @@ def get_all_products():
 
 # gets all products that matches name
 def get_all_products_by_name(name):
-    return Product.objects.filter(name = name)
+    return Product.objects.filter(product_name = name)
 
 def get_product_by_id(id):
     p = Product.objects.get(id = id)
