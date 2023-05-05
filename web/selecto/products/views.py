@@ -9,6 +9,9 @@ from .forms import CustomUserCreationForm
 from random import randint
 from config import GOOGLE_CLIENT_ID
 from . import openai_module
+from products.serializers import ProductSerializer, ReviewSerializer
+from rest_framework import generics
+from dataaccesslayer import get_all_products
 
 # Create your views here.
 
@@ -124,4 +127,24 @@ class SignUpView(CreateView):
             })
         else:
             return response
+        
+'''
+These are generic class based views. Implement a lot to save on code.
+https://www.django-rest-framework.org/tutorial/3-class-based-views/
+'''
+class ApiProductList(generics.ListCreateAPIView):
+    queryset = get_all_products()
+    serializer_class = ProductSerializer
+
+class ApiProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = get_all_products()
+    serializer_class = ProductSerializer
+
+class ApiReviewList(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
 
