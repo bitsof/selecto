@@ -108,5 +108,7 @@ class TestApi:
         assert response.data['review_content'] == data['review_content']
         assert response.data['review_publish_date'] == data['review_publish_date'].isoformat()
 
-    def test_api_review_detail_delete(self, client):
-        url = reverse('products:api-review-details', kwargs={'pk': 1})
+    def test_api_review_detail_delete(self, client, product, review):
+        url = reverse('products:api-review-details', kwargs={'pk': review.pk})
+        response = client.delete(url)
+        assert response.status_code == status.HTTP_204_NO_CONTENT
