@@ -1,8 +1,10 @@
+from typing import Any, Dict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth import logout
 from django.views.generic.edit import CreateView
+from django.views import generic
 from django.urls import reverse_lazy
 from .models import Product, Review
 from .forms import CustomUserCreationForm
@@ -37,14 +39,16 @@ def home(request):
     }
     return render(request, 'products/home.html', context)
 
-def index(request):
-    product_list = Product.objects.all()
-    template = loader.get_template('products/index.html')
-    context = {
-        'page_title' : 'Selecto - Index',
-        'product_list': product_list,
-    }
-    return render(request, 'products/index.html', context)
+class ProductListView(generic.ListView):
+    model = Product
+    context_object_name = 'product_list'
+    template_name = 'products/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Selecto - Index'
+        return context
+
 
 def details(request, product_id):
     product = Product.objects.get(id=product_id)
