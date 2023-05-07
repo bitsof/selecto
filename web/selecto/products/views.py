@@ -49,7 +49,6 @@ class ProductListView(generic.ListView):
         context['page_title'] = 'Selecto - Index'
         return context
 
-
 class ProductDetailView(generic.DetailView):
     model = Product
     context_object_name = 'product'
