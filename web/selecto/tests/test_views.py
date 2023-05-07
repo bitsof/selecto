@@ -20,7 +20,7 @@ def test_index(client):
 @pytest.mark.django_db
 def test_details_view(client):
     product = make_product('Test Product', 'This is a test product.')
-    url = reverse('products:details', args=[product.id])
+    url = reverse('products:details', args=[product.pk])
     response = client.get(url)
     assert response.status_code == 200
     assert response.context['product'] == product

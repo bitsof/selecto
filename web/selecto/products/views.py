@@ -50,16 +50,16 @@ class ProductListView(generic.ListView):
         return context
 
 
-def details(request, product_id):
-    product = Product.objects.get(id=product_id)
-    review_list = Review.objects.filter(review_related_product = product)
-    template = loader.get_template('products/details.html')
-    page_title = 'Selecto - ' + product.product_name
-    context = {
-        'page_title' : page_title,
-        'product': product, 'review_list' : review_list,
-    }
-    return render(request,'products/details.html', context )
+class ProductDetailView(generic.DetailView):
+    model = Product
+    context_object_name = 'product'
+    template_name = 'products/details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_list'] = Review.objects.filter(review_related_product=self.get_object().id)
+        context['page_title'] = 'Selecto - ' + self.get_object().product_name
+        return context
 
 def review_details(request, product_id, review_id):
     review = Review.objects.get(id = review_id)

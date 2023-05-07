@@ -44,7 +44,7 @@
             <li>
             <!-- Done to keep url generic instead of hardcoded, looks it up through the name value
             set earlier in urls section -->
-            <a href="{% url 'products:details' product.id %}">
+            <a href="{% url 'products:details' product.pk %}">
                 <div class="product-name">{{ product.product_name }}</div>
                 <div class="product-description">{{ product.product_description }}</div>
             </a>
