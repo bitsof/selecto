@@ -61,27 +61,15 @@ class ProductDetailView(generic.DetailView):
         context['page_title'] = 'Selecto - ' + self.get_object().product_name
         return context
 
-def review_details(request, product_id, review_id):
-    review = Review.objects.get(id = review_id)
-    template = loader.get_template('products/review_details.html')
-    summary = ''
-    definition = ''
-    if(request.GET.get('define')):
-        response, definition = openai_module.define(request.GET.get('mytextbox'))
-        print(response)
-        print(response.choices)
-    if(request.GET.get('summarize')):
-       response, summary = openai_module.summarize(review.review_content)
-       print("Response : ", response.choices[0].text)
-       print(response)
-       print(response.choices)
-    context = {
-        'page_title' : 'Selecto - Review',
-        'review' : review,
-        'definition' : definition,
-        'summary' : summary,
-    }
-    return render(request, 'products/review_details.html', context)
+class ReviewDetailView(generic.DetailView):
+    model = Review
+    content_object_name = 'review'
+    template_name = 'products/review_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Selecto - Review'
+        return context
 
 def contact_us(request):
     templete = loader.get_template('products/contact_us.html')
