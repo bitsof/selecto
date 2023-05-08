@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from products.models import Product, ProductPhoto, Review
+from rest_framework import permissions
 
 '''
 The ModelSerializer class handles a lot of boilerplating, including:
@@ -7,6 +8,8 @@ The ModelSerializer class handles a lot of boilerplating, including:
     - simple default implementations for  the create() and update() methods
 '''
 class ProductSerializer(serializers.ModelSerializer):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
     class Meta:
         # choose the model product from products.models
         model = Product
@@ -14,6 +17,8 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['pk', 'product_name', 'product_description']
 
 class ReviewSerializer(serializers.ModelSerializer):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     class Meta:
         # choose the model review from products.models
         model = Review
