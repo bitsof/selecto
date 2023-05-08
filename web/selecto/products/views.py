@@ -170,26 +170,18 @@ class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.order_by('username')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
 class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.order_by('username')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'products': reverse('product-list', request=request, format=format)
+        'users': reverse('products:api_user_list', request=request, format=format),
+        'products': reverse('products:api_product_list', request=request, format=format)
     })
-
-class ProductHighlight(generics.GenericAPIView):
-    queryset = Product.objects.all()
-    renderer_classes = [renderers.StaticHTMLRenderer]
-
-    def get(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
