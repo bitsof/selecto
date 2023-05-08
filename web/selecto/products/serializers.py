@@ -8,7 +8,7 @@ The ModelSerializer class handles a lot of boilerplating, including:
     - generating an automatically determined set of fields
     - simple default implementations for  the create() and update() methods
 '''
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
     class Meta:
@@ -17,7 +17,7 @@ class ProductSerializer(serializers.ModelSerializer):
         # select fields from the model description
         fields = ['pk', 'product_name', 'product_description']
 
-class ReviewSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.HyperlinkedModelSerializer):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     class Meta:
