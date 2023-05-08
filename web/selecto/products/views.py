@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .models import Product, Review
@@ -9,9 +10,8 @@ from .forms import CustomUserCreationForm
 from random import randint
 from config import GOOGLE_CLIENT_ID
 from . import openai_module
-from products.serializers import ProductSerializer, ReviewSerializer
-from rest_framework import generics
-from rest_framework import renderers
+from products.serializers import ProductSerializer, ReviewSerializer, UserSerializer
+from rest_framework import generics, renderers, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -152,18 +152,32 @@ https://www.django-rest-framework.org/tutorial/3-class-based-views/
 class ApiProductList(generics.ListCreateAPIView):
     queryset = get_all_products()
     serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class ApiProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_all_products()
     serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class ApiReviewList(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
 
 @api_view(['GET'])
 def api_root(request, format=None):
