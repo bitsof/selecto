@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from products.models import Product, ProductPhoto, Review
 from rest_framework import permissions
+from django.contrib.auth.models import User
 
 '''
 The ModelSerializer class handles a lot of boilerplating, including:
@@ -24,3 +25,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         # select fields from the model description
         fields = ['pk', 'review_related_product', 'review_content', 'review_publish_date']
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['pk', 'username']
