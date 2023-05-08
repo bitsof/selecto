@@ -27,13 +27,13 @@ def review(product):
 @pytest.mark.django_db
 class TestApi:
     def test_api_product_list_get(self, client):
-        url = reverse('products:api-product-list')
+        url = reverse('products:api_product_list')
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data) > 0
 
     def test_api_product_list_post(self, client):
-        url = reverse('products:api-product-list')
+        url = reverse('products:api_product_list')
         data = {
             'product_name': 'Test Product',
             'product_description': 'This is a test product',
@@ -44,13 +44,13 @@ class TestApi:
         assert response.data['product_description'] == data['product_description']
 
     def test_api_product_detail_get(self, client, product):
-        url = reverse('products:api-product-details', kwargs={'pk': product.pk})
+        url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert 'Test Product' in response.data['product_name']
 
     def test_api_product_detail_put(self, client, product):
-        url = reverse('products:api-product-details', kwargs={'pk': product.pk})
+        url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         data = {
             'product_name': 'Updated Product',
             'product_description': 'This is an updated product',
@@ -61,18 +61,18 @@ class TestApi:
         assert response.data['product_description'] == data['product_description']
 
     def test_api_product_detail_delete(self, client, product):
-        url = reverse('products:api-product-details', kwargs={'pk': product.pk})
+        url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         response = client.delete(url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
     def test_api_review_list_get(self, client):
-        url = reverse('products:api-review-list')
+        url = reverse('products:api_review_list')
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data) > 0
 
     def test_api_review_list_post(self, client, product):
-        url = reverse('products:api-review-list')
+        url = reverse('products:api_review_list')
         pacific = pytz.timezone('US/Pacific')
         time = timezone.now().astimezone(pacific).replace(microsecond=0)
         data = {
@@ -87,13 +87,13 @@ class TestApi:
         assert response.data['review_publish_date'] == data['review_publish_date'].isoformat()
             
     def test_api_review_detail_get(self, client, product, review):
-        url = reverse('products:api-review-details', kwargs={'pk': 1})
+        url = reverse('products:api_review_details', kwargs={'pk': 1})
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert 'test review' in response.data['review_content']
 
     def test_api_review_detail_put(self, client, product, review):
-        url = reverse('products:api-review-details', kwargs={'pk': review.pk})
+        url = reverse('products:api_review_details', kwargs={'pk': review.pk})
         pacific = pytz.timezone('US/Pacific')
         time = timezone.now().astimezone(pacific).replace(microsecond=0)
         data = {
@@ -109,6 +109,6 @@ class TestApi:
         assert response.data['review_publish_date'] == data['review_publish_date'].isoformat()
 
     def test_api_review_detail_delete(self, client, product, review):
-        url = reverse('products:api-review-details', kwargs={'pk': review.pk})
+        url = reverse('products:api_review_details', kwargs={'pk': review.pk})
         response = client.delete(url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
