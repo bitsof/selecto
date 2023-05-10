@@ -175,15 +175,15 @@ class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class UserList(generics.ListAPIView):
-    # while the other classes had models whose ordering was defined throught
-    # the meta class, instead users is ordered by username here
+    # While the other classes had models whose ordering was defined through
+    # the meta class, instead users is ordered by username here.
     queryset = User.objects.order_by('username')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
 class UserDetail(generics.RetrieveAPIView):
-    # while the other classes had models whose ordering was defined throught
-    # the meta class, instead users is ordered by username here
+    # While the other classes had models whose ordering was defined through
+    # the meta class, instead users is ordered by username here.
     queryset = User.objects.order_by('username')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
