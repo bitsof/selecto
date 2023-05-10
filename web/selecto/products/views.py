@@ -146,8 +146,13 @@ class SignUpView(CreateView):
             return response
         
 '''
-These are generic class based views. Implement a lot to save on code.
+These are generic class based views. Implements a lot so it saves on boilerplate code.
 https://www.django-rest-framework.org/tutorial/3-class-based-views/
+'''
+'''
+The classes that inherit from ListCreateAPIView handles GET and POST requests, 
+while classes that inherit from RetrieveUpdateDestroyAPIView handles GET, 
+PUT, PATCH, and DELETE requests.
 '''
 class ApiProductList(generics.ListCreateAPIView):
     queryset = get_all_products()
@@ -170,18 +175,28 @@ class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class UserList(generics.ListAPIView):
+    # while the other classes had models whose ordering was defined throught
+    # the meta class, instead users is ordered by username here
     queryset = User.objects.order_by('username')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
 class UserDetail(generics.RetrieveAPIView):
+    # while the other classes had models whose ordering was defined throught
+    # the meta class, instead users is ordered by username here
     queryset = User.objects.order_by('username')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
+'''
+The api_root function is a simple view that returns a dictionary of available API endpoints, 
+represented as URLs. It uses the DRF reverse function to generate the URLs dynamically, 
+based on the URL patterns defined in the project's urls.py file.
+'''
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
+        # gets the url from urls.py
         'users': reverse('products:api_user_list', request=request, format=format),
         'products': reverse('products:api_product_list', request=request, format=format),
         'reviews': reverse('products:api_review_list', request=request, format=format),

@@ -112,6 +112,8 @@ class TestApi:
 
     def test_api_review_list_post_with_permission_superuser(self, client, product, superuser):
         url = reverse('products:api_review_list')
+        # changes timezone to match test website as well as removes microseconds
+        # there is an error with how formatting is done that results in microseconds being rounded off in json
         pacific = pytz.timezone('US/Pacific')
         time = timezone.now().astimezone(pacific).replace(microsecond=0)
         data = {
@@ -121,7 +123,9 @@ class TestApi:
         }
         client.force_login(superuser)
         response = client.post(url, data, format='json')
+        # The url is in the format of a hyperlink
         url = response.data['review_related_product']
+        # This regular expression gets the final numeric sequence, i.e. the pk
         pk = re.findall(r'\d+', url)[-1]
         assert response.status_code == status.HTTP_201_CREATED
         assert product.pk == int(pk)
@@ -157,7 +161,9 @@ class TestApi:
         }
         client.force_login(superuser)
         response = client.put(url, data, format='json', content_type='application/json')
+        # The url is in the format of a hyperlink
         url = response.data['review_related_product']
+        # This regular expression gets the final numeric sequence, i.e. the pk
         pk = re.findall(r'\d+', url)[-1]
         assert response.status_code == status.HTTP_200_OK
         assert product.pk == int(pk)

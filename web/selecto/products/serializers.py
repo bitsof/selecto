@@ -19,17 +19,26 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
 class ReviewSerializer(serializers.HyperlinkedModelSerializer):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    '''
+    While new fields can be defined here to display,
+    Hyperlinkedrelatedfields require a field to be defined in the model.
+    In this case it's review_related_product, and rather than list
+    the primary key or pk for short, it lists a url linking to the
+    corresponding products product detail page in the api.
+    '''
     review_related_product = serializers.HyperlinkedRelatedField(view_name='products:api_product_details',
                                                   queryset=Product.objects.all())
 
     class Meta:
         # choose the model review from products.models
         model = Review
-        # select fields from the model description
+        # select fields from the model description to display
         fields = ['pk', 'review_related_product', 'review_content', 'review_publish_date']
 
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        # select fields to display
+        # refer to https://docs.djangoproject.com/en/4.2/ref/contrib/auth/#user-model for additional fields
         fields = ['pk', 'username']

@@ -22,6 +22,7 @@ class Review(models.Model):
     review_publish_date = models.DateTimeField()
 
     class Meta:
+        # orders by the primary key
         ordering = ['pk']
 
 class ProductPhoto(models.Model):
@@ -29,6 +30,7 @@ class ProductPhoto(models.Model):
     photo_related_product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     class Meta:
+        # orders by the primary key
         ordering = ['pk']
 
 class Store(models.Model):
@@ -44,6 +46,7 @@ class StoreLink(models.Model):
     store_link_store =  models.ForeignKey(Store, on_delete=models.CASCADE)
 
     class Meta:
+        # orders by the primary key
         ordering = ['pk']
 
 
