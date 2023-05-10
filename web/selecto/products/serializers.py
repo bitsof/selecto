@@ -10,16 +10,17 @@ The ModelSerializer class handles a lot of boilerplating, including:
 '''
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    highlight = serializers.HyperlinkedIdentityField(view_name='api_product_details', format='html')
     
     class Meta:
         # choose the model product from products.models
         model = Product
         # select fields from the model description
-        fields = ['pk', 'product_name', 'product_description', 'highlight']
+        fields = ['pk', 'product_name', 'product_description']
 
 class ReviewSerializer(serializers.HyperlinkedModelSerializer):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    review_related_product = serializers.HyperlinkedRelatedField(view_name='products:api_product_details',
+                                                  queryset=Product.objects.all())
 
     class Meta:
         # choose the model review from products.models
