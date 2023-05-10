@@ -183,5 +183,6 @@ class UserDetail(generics.RetrieveAPIView):
 def api_root(request, format=None):
     return Response({
         'users': reverse('products:api_user_list', request=request, format=format),
-        'products': reverse('products:api_product_list', request=request, format=format)
+        'products': reverse('products:api_product_list', request=request, format=format),
+        'reviews': reverse('products:api_review_list', request=request, format=format),
     })
