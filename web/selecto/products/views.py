@@ -16,6 +16,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from dataaccesslayer import get_all_products
+from .utils import get_page_title
 
 # Create your views here.
 
@@ -36,7 +37,7 @@ def home(request):
             r = None
     template = loader.get_template('products/home.html')
     context = {
-        'page_title' : 'Selecto',
+        'page_title' : get_page_title('home'),
         'product' : p,
         'review' : r,
         'product_list' : product_list,
@@ -48,7 +49,7 @@ def index(request):
     product_list = Product.objects.all()
     template = loader.get_template('products/index.html')
     context = {
-        'page_title' : 'Selecto - Index',
+        'page_title' : get_page_title('index'),
         'product_list': product_list,
     }
     return render(request, 'products/index.html', context)
@@ -57,9 +58,8 @@ def details(request, product_id):
     product = Product.objects.get(id=product_id)
     review_list = Review.objects.filter(review_related_product = product)
     template = loader.get_template('products/details.html')
-    page_title = 'Selecto - ' + product.product_name
     context = {
-        'page_title' : page_title,
+        'page_title' : get_page_title('details', product.product_name),
         'product': product, 'review_list' : review_list,
     }
     return render(request,'products/details.html', context )
@@ -79,7 +79,7 @@ def review_details(request, product_id, review_id):
        print(response)
        print(response.choices)
     context = {
-        'page_title' : 'Selecto - Review',
+        'page_title' : get_page_title('review_details', Product.objects.get(id=product_id).product_name),
         'review' : review,
         'definition' : definition,
         'summary' : summary,
@@ -89,14 +89,14 @@ def review_details(request, product_id, review_id):
 def contact_us(request):
     templete = loader.get_template('products/contact_us.html')
     context = {
-        'page_title' : 'Selecto - Contact Us'
+        'page_title' : get_page_title('contact_us')
     }
     return render(request, 'products/contact_us.html', context)
 
 def about_us(request):
     template = loader.get_template('products/about_us.html')
     context = {
-        'page_title' : 'Selecto - About Us'
+        'page_title' : get_page_title('about_us')
     }
     return render(request, 'products/about_us.html', context)
 
@@ -106,7 +106,7 @@ def logout_view(request):
 
 def login(request):
     context = {
-        'page_title' : 'Selecto - Log In',
+        'page_title' : get_page_title('login'),
         'google_client_id':GOOGLE_CLIENT_ID,
         'host_name':'http://localhost:8000/login/'
     }
@@ -116,7 +116,7 @@ def login(request):
 def signup(request):
     template = loader.get_template('products/signup.html')
     context = {
-        'page_title' : 'Selecto - Sign Up',
+        'page_title' : get_page_title('signup'),
     }
     return render(request, 'products/signup.html', context)
 
