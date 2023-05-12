@@ -10,6 +10,7 @@ from .forms import CustomUserCreationForm
 from random import randint
 from config import GOOGLE_CLIENT_ID
 from . import openai_module
+from .utils import get_page_title
 
 # Create your views here.
 
@@ -30,7 +31,7 @@ def home(request):
             r = None
     template = loader.get_template('products/home.html')
     context = {
-        'page_title' : 'Selecto',
+        'page_title' : get_page_title('home'),
         'product' : p,
         'review' : r,
         'product_list' : product_list,
@@ -45,7 +46,7 @@ class ProductListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
-        context['page_title'] = 'Selecto - Index'
+        context['page_title'] = get_page_title('index')
         return context
 
 class ProductDetailView(generic.DetailView):
@@ -56,7 +57,7 @@ class ProductDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['review_list'] = Review.objects.filter(review_related_product=self.get_object().id)
-        context['page_title'] = 'Selecto - ' + self.get_object().product_name
+        context['page_title'] = get_page_title('details', self.get_object().product_name)
         return context
 
 class ReviewDetailView(generic.DetailView):
@@ -66,20 +67,21 @@ class ReviewDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Selecto - Review'
+        context['page_title'] = get_page_title('review_details', Product.objects.get(id=self.get_object().review_related_product.id).product_name)
+        
         return context
 
 def contact_us(request):
     templete = loader.get_template('products/contact_us.html')
     context = {
-        'page_title' : 'Selecto - Contact Us'
+        'page_title' : get_page_title('contact_us')
     }
     return render(request, 'products/contact_us.html', context)
 
 def about_us(request):
     template = loader.get_template('products/about_us.html')
     context = {
-        'page_title' : 'Selecto - About Us'
+        'page_title' : get_page_title('about_us')
     }
     return render(request, 'products/about_us.html', context)
 
@@ -89,7 +91,7 @@ def logout_view(request):
 
 def login(request):
     context = {
-        'page_title' : 'Selecto - Log In',
+        'page_title' : get_page_title('login'),
         'google_client_id':GOOGLE_CLIENT_ID,
         'host_name':'http://localhost:8000/login/'
     }
@@ -99,7 +101,7 @@ def login(request):
 def signup(request):
     template = loader.get_template('products/signup.html')
     context = {
-        'page_title' : 'Selecto - Sign Up',
+        'page_title' : get_page_title('signup'),
     }
     return render(request, 'products/signup.html', context)
 
