@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 from .views import SignUpView
+from rest_framework.urlpatterns import format_suffix_patterns
 
 app_name = 'products'
 urlpatterns = [
@@ -14,4 +15,13 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('signup/', SignUpView.as_view(), name='signup'),
+    path('api/products/', views.ApiProductList.as_view(), name='api_product_list'),
+    path('api/products/<int:pk>/', views.ApiProductDetail.as_view(), name='api_product_details'),
+    path('api/reviews/', views.ApiReviewList.as_view(), name='api_review_list'),
+    path('api/reviews/<int:pk>/', views.ApiReviewDetail.as_view(), name='api_review_details'),
+    path('api/users/', views.UserList.as_view(), name='api_user_list'),
+    path('api/users/<int:pk>/', views.UserDetail.as_view(), name='api_user_details'),
+    path('api/', views.api_root),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

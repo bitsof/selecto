@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from django.views import generic
 from django.urls import reverse_lazy
@@ -10,6 +11,12 @@ from .forms import CustomUserCreationForm
 from random import randint
 from config import GOOGLE_CLIENT_ID
 from . import openai_module
+from products.serializers import ProductSerializer, ReviewSerializer, UserSerializer
+from rest_framework import generics, renderers, permissions
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from dataaccesslayer import get_all_products
 from .utils import get_page_title
 
 # Create your views here.
@@ -129,4 +136,60 @@ class SignUpView(CreateView):
             })
         else:
             return response
+        
+'''
+These are generic class based views. Implements a lot so it saves on boilerplate code.
+https://www.django-rest-framework.org/tutorial/3-class-based-views/
+'''
+'''
+The classes that inherit from ListCreateAPIView handles GET and POST requests, 
+while classes that inherit from RetrieveUpdateDestroyAPIView handles GET, 
+PUT, PATCH, and DELETE requests.
+'''
+class ApiProductList(generics.ListCreateAPIView):
+    queryset = get_all_products()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+class ApiProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = get_all_products()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class ApiReviewList(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class UserList(generics.ListAPIView):
+    # While the other classes had models whose ordering was defined through
+    # the meta class, instead users is ordered by username here.
+    queryset = User.objects.order_by('username')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class UserDetail(generics.RetrieveAPIView):
+    # While the other classes had models whose ordering was defined through
+    # the meta class, instead users is ordered by username here.
+    queryset = User.objects.order_by('username')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+'''
+The api_root function is a simple view that returns a dictionary of available API endpoints, 
+represented as URLs. It uses the DRF reverse function to generate the URLs dynamically, 
+based on the URL patterns defined in the project's urls.py file.
+'''
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        # gets the url from urls.py
+        'users': reverse('products:api_user_list', request=request, format=format),
+        'products': reverse('products:api_product_list', request=request, format=format),
+        'reviews': reverse('products:api_review_list', request=request, format=format),
+    })
