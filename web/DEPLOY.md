@@ -32,3 +32,21 @@ And you can run gunicorn using...
 sudo systemctl start gunicorn
 sudo systemctl status gunicorn
 ```
+
+If there are permission issues with writing to DB:
+```
+chown django:django /home/django/selecto/web/selecto
+chown django:django /home/django/selecto/web/selecto/db.sqlite3
+```
+
+To access the admin page in prod, please go here:
+```
+http://selecto.pro/admin/
+```
+
+The username and password can be created by using your saved superuser account.
+This is made by this command:
+```
+python manage.py createsuperuser
+
+```
