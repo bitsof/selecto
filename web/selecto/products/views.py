@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth import logout
 from django.views.generic.edit import CreateView
+from django.views import generic
 from django.urls import reverse_lazy
 from .models import Product, Review
 from .forms import CustomUserCreationForm
@@ -38,46 +39,37 @@ def home(request):
     }
     return render(request, 'products/home.html', context)
 
-def index(request):
-    product_list = Product.objects.all()
-    template = loader.get_template('products/index.html')
-    context = {
-        'page_title' : get_page_title('index'),
-        'product_list': product_list,
-    }
-    return render(request, 'products/index.html', context)
+class ProductListView(generic.ListView):
+    model = Product
+    context_object_name = 'product_list'
+    template_name = 'products/index.html'
 
-def details(request, product_id):
-    product = Product.objects.get(id=product_id)
-    review_list = Review.objects.filter(review_related_product = product)
-    template = loader.get_template('products/details.html')
-    context = {
-        'page_title' : get_page_title('details', product.product_name),
-        'product': product, 'review_list' : review_list,
-    }
-    return render(request,'products/details.html', context )
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['page_title'] = get_page_title('index')
+        return context
 
-def review_details(request, product_id, review_id):
-    review = Review.objects.get(id = review_id)
-    template = loader.get_template('products/review_details.html')
-    summary = ''
-    definition = ''
-    if(request.GET.get('define')):
-        response, definition = openai_module.define(request.GET.get('mytextbox'))
-        print(response)
-        print(response.choices)
-    if(request.GET.get('summarize')):
-       response, summary = openai_module.summarize(review.review_content)
-       print("Response : ", response.choices[0].text)
-       print(response)
-       print(response.choices)
-    context = {
-        'page_title' : get_page_title('review_details', Product.objects.get(id=product_id).product_name),
-        'review' : review,
-        'definition' : definition,
-        'summary' : summary,
-    }
-    return render(request, 'products/review_details.html', context)
+class ProductDetailView(generic.DetailView):
+    model = Product
+    context_object_name = 'product'
+    template_name = 'products/details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_list'] = Review.objects.filter(review_related_product=self.get_object().id)
+        context['page_title'] = get_page_title('details', self.get_object().product_name)
+        return context
+
+class ReviewDetailView(generic.DetailView):
+    model = Review
+    content_object_name = 'review'
+    template_name = 'products/review_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = get_page_title('review_details', Product.objects.get(id=self.get_object().review_related_product.id).product_name)
+        
+        return context
 
 def contact_us(request):
     templete = loader.get_template('products/contact_us.html')
