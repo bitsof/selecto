@@ -12,7 +12,7 @@ class Product(models.Model):
     product_name = models.CharField(max_length = 100)
     product_description = models.CharField(max_length =30000)
 
-    #defines how the string is formatted on the admin page
+    #defines string representation of object
     def __str__(self):
         return f"{self.product_name} ({self.pk})"
 
@@ -41,7 +41,6 @@ class Store(models.Model):
     store_name = models.CharField(max_length = 200)
     store_url_home = models.URLField()
 
-    #defines how the string is formatted on the admin page
     def __str__(self):
         return f"{self.store_name} ({self.pk})"
 
@@ -52,6 +51,9 @@ class StoreLink(models.Model):
     store_link_url = models.URLField()
     store_link_related_product = models.ForeignKey(Product, on_delete=models.CASCADE)
     store_link_store =  models.ForeignKey(Store, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.store_link_url} ({self.pk})"
 
     class Meta:
         # orders by the primary key
