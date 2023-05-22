@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from django.views import generic
 from django.urls import reverse_lazy
-from .models import Product, Review
+from .models import Product, Review, ProductPhoto
 from .forms import CustomUserCreationForm
 from random import randint
 from config import GOOGLE_CLIENT_ID
@@ -65,6 +65,7 @@ class ProductDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['review_list'] = Review.objects.filter(review_related_product=self.get_object().id)
         context['page_title'] = get_page_title('details', self.get_object().product_name)
+        context['photo_list'] = ProductPhoto.objects.filter(photo_related_product=self.get_object().id)
         return context
 
 class ReviewDetailView(generic.DetailView):
