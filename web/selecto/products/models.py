@@ -12,6 +12,10 @@ class Product(models.Model):
     product_name = models.CharField(max_length = 100)
     product_description = models.CharField(max_length =30000)
 
+    #defines how the string is formatted on the admin page
+    def __str__(self):
+        return f"{self.product_name} ({self.pk})"
+
     # defines meta class with field ordering required for restframework to know how to order items listed in API
     class Meta:
         ordering = ['product_name']
@@ -36,6 +40,10 @@ class ProductPhoto(models.Model):
 class Store(models.Model):
     store_name = models.CharField(max_length = 200)
     store_url_home = models.URLField()
+
+    #defines how the string is formatted on the admin page
+    def __str__(self):
+        return f"{self.store_name} ({self.pk})"
 
     class Meta:
         ordering = ['store_name']
