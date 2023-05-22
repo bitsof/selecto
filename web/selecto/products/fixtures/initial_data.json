@@ -20,7 +20,7 @@
       "model": "products.productphoto",
       "pk": 1,
       "fields": {
-        "photo_url": "https://example.com/sample-product-photo.jpg",
+        "photo_url": "https://m.media-amazon.com/images/I/81dkWDxetjL._AC_UX679_.jpg",
         "photo_related_product": 1
       }
     },
