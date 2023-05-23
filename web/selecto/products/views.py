@@ -13,6 +13,7 @@ from config import GOOGLE_CLIENT_ID
 from . import openai_module
 from products.serializers import ProductSerializer, ReviewSerializer, UserSerializer
 from rest_framework import generics, renderers, permissions
+from .permissions import IsAdminOrReadOnly
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -149,22 +150,22 @@ PUT, PATCH, and DELETE requests.
 class ApiProductList(generics.ListCreateAPIView):
     queryset = get_all_products()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class ApiProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_all_products()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class ApiReviewList(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class UserList(generics.ListAPIView):
     # While the other classes had models whose ordering was defined through

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from products.models import Product, ProductPhoto, Review
 from rest_framework import permissions
 from django.contrib.auth.models import User
+from .permissions import IsAdminOrReadOnly
 
 '''
 The ModelSerializer class handles a lot of boilerplating, including:
@@ -9,7 +10,7 @@ The ModelSerializer class handles a lot of boilerplating, including:
     - simple default implementations for  the create() and update() methods
 '''
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
     
     class Meta:
         # choose the model product from products.models
@@ -18,7 +19,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['pk', 'product_name', 'product_description']
 
 class ReviewSerializer(serializers.HyperlinkedModelSerializer):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
     '''
     While new fields can be defined here to display,
     Hyperlinkedrelatedfields require a field to be defined in the model.
@@ -36,6 +37,7 @@ class ReviewSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['pk', 'review_related_product', 'review_content', 'review_publish_date']
 
 class UserSerializer(serializers.ModelSerializer):
+    permission_classes = [permissions.IsAdminUser]
 
     class Meta:
         model = User
