@@ -37,6 +37,13 @@ def superuser():
     # Remove the superuser from your database or user management system (if necessary)
     superuser.delete()
 
+@pytest.fixture
+def user():
+    user = User(username="user", password="password123")
+    user.save()
+    yield user
+    user.delete()
+
 @pytest.mark.django_db
 class TestApi:
     def test_api_product_list_get(self, client):
@@ -65,14 +72,26 @@ class TestApi:
         }
         response = client.post(url, data, format='json')
         assert response.status_code == status.HTTP_403_FORBIDDEN
+    
+    def test_api_product_list_post_without_permission_user(self, client, user):
+        url = reverse('products:api_product_list')
+        data = {
+            'product_name': 'Test Product',
+            'product_description': 'This is a test product',
+        }
+        client.force_login(superuser)
+        response = client.post(url, data, format='json')
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.data['product_name'] == data['product_name']
+        assert response.data['product_description'] == data['product_description']
 
-    def test_api_product_detail_get(self, client, product):
+    def test_api_product_details_get(self, client, product):
         url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert 'Test Product' in response.data['product_name']
 
-    def test_api_product_detail_put_with_permission_superuser(self, client, product, superuser):
+    def test_api_product_details_put_with_permission_superuser(self, client, product, superuser):
         url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         data = {
             'product_name': 'Updated Product',
@@ -84,7 +103,7 @@ class TestApi:
         assert response.data['product_name'] == data['product_name']
         assert response.data['product_description'] == data['product_description']
 
-    def test_api_product_detail_put_without_permission(self, client, product):
+    def test_api_product_details_put_without_permission(self, client, product):
         url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         data = {
             'product_name': 'Updated Product',
@@ -93,13 +112,13 @@ class TestApi:
         response = client.put(url, data, content_type='application/json')
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
-    def test_api_product_detail_delete_with_permission_superuser(self, client, product, superuser):
+    def test_api_product_details_delete_with_permission_superuser(self, client, product, superuser):
         url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         client.force_login(superuser)
         response = client.delete(url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
-    def test_api_product_detail_delete_without_permission(self, client, product):
+    def test_api_product_details_delete_without_permission(self, client, product):
         url = reverse('products:api_product_details', kwargs={'pk': product.pk})
         response = client.delete(url)
         assert response.status_code == status.HTTP_403_FORBIDDEN
@@ -143,7 +162,22 @@ class TestApi:
         }
         response = client.post(url, data, format='json')
         assert response.status_code == status.HTTP_403_FORBIDDEN
-            
+
+    def test_api_review_list_post_without_permission_user(self, client, product, user):
+        url = reverse('products:api_review_list')
+        # changes timezone to match test website as well as removes microseconds
+        # there is an error with how formatting is done that results in microseconds being rounded off in json
+        pacific = pytz.timezone('US/Pacific')
+        time = timezone.now().astimezone(pacific).replace(microsecond=0)
+        data = {
+            'review_related_product': reverse('products:api_product_details', args=[product.pk]),
+            'review_content': 'This is a test review',
+            'review_publish_date' : time
+        }
+        client.force_login(user)
+        response = client.post(url, data, format='json')
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+  
     def test_api_review_detail_get(self, client, product, review):
         url = reverse('products:api_review_details', kwargs={'pk': 1})
         response = client.get(url)
@@ -191,4 +225,40 @@ class TestApi:
     def test_api_review_detail_delete_without_permission(self, client, product, review):
         url = reverse('products:api_review_details', kwargs={'pk': review.pk})
         response = client.delete(url)
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_api_user_list_get_with_permission_superuser(self, client, user, superuser):
+        url = reverse('products:api_user_list')
+        client.force_login(superuser)
+        response = client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+        assert len(response.data) > 0
+
+    def test_api_user_list_get_without_permission(self, client):
+        url = reverse('products:api_user_list')
+        response = client.get(url)
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_api_user_list_get_without_permission_user(self, client, user):
+        url = reverse('products:api_user_list')
+        client.force_login(user)
+        response = client.get(url)
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_api_user_details_get_with_permission_superuser(self, client, user, superuser):
+        url = reverse('products:api_user_details', kwargs={'pk': user.pk})
+        client.force_login(superuser)
+        response = client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+        assert len(response.data) > 0
+
+    def test_api_user_details_get_without_permission(self, client, user):
+        url = reverse('products:api_user_details', kwargs={'pk': user.pk})
+        response = client.get(url)
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_api_user_details_get_without_permission_user(self, client, user):
+        url = reverse('products:api_user_details', kwargs={'pk': user.pk})
+        client.force_login(user)
+        response = client.get(url)
         assert response.status_code == status.HTTP_403_FORBIDDEN
