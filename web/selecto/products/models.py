@@ -53,7 +53,7 @@ class StoreLink(models.Model):
     store_link_store =  models.ForeignKey(Store, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.store_link_url} ({self.pk})"
+        return f"{self.store_link_store.store_name} {self.store_link_related_product.product_name} ({self.pk})"
 
     class Meta:
         # orders by the primary key
