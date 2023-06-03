@@ -1,5 +1,70 @@
 {% extends 'products/header.html' %}
 
 {% block content %}
+    <div class="clearfix">
+        {% if photo_list|length > 0 %}
+            <div id="carouselExampleIndicators" class="carousel slide col-md-6 float-md-end mb-3 ms-md-3">
+                <div class="carousel-indicators">
+                    {% for photo in photo_list %}
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter|add:"-1" }}" 
+                            {% if forloop.counter == forloop.counter %} class="active" aria-current="true" {% endif %} 
+                            aria-label="Slide {{ forloop.counter }}">
+                        </button>
+                    {% endfor %}
+                </div>
+                <div class="carousel-inner">
+                    {% for photo in photo_list %}
+                        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                            <img src="{{ photo.photo_url }}" class="d-block w-100" alt="{{ product.product_name }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        {% endif %}
+        <h1>{{ product.product_name }}</h1>
+        <p>
+            {{ product.product_description }}
+        </p>
+    </div>
+
+    <h2>Reviews</h2>
+    <div class="list-group">
+        {% for review in review_list %}
+            <div class="list-group-item">
+                <p class="mb-1">{{ review.review_content }}</p>
+                <p class="mb-0">
+                    <small class="text-muted">Posted {{ review.review_publish_date }}</small>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+    {% if is_paginated %}
+        <div class="pagination justify-content-center mt-3 mb-3">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current-page">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+    
 {% endblock %}
 
