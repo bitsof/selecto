@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from django.views import generic
 from django.urls import reverse_lazy
+from django.db import models
 from .models import Product, Review, ProductPhoto
 from .forms import CustomUserCreationForm
 from random import randint
@@ -52,6 +53,15 @@ class ProductListView(generic.ListView):
     context_object_name = 'product_list'
     template_name = 'products/index.html'
     paginate_by = 3
+
+    def get_queryset(self):
+        # Fetch all products with their first photo
+        queryset = super().get_queryset().prefetch_related('productphoto_set')
+        # Annotate each product with the first photo
+        queryset = queryset.annotate(first_photo_url=models.Subquery(
+            ProductPhoto.objects.filter(photo_related_product=models.OuterRef('pk')).values('photo_url')[:1]
+        ))
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
