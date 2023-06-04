@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.views.generic.edit import CreateView
 from django.views import generic
 from django.urls import reverse_lazy
@@ -75,7 +76,18 @@ class ProductDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['review_list'] = Review.objects.filter(review_related_product=self.get_object().id)
+        # Paginates the review_list
+        review_queryset = Review.objects.filter(review_related_product=self.get_object().id)
+        # Create a Paginator instance
+        paginator = Paginator(review_queryset, per_page=2)
+        # Get the current page number from the request
+        page_number = self.request.GET.get('page')
+        # Get the Page object for the current page
+        page_obj = paginator.get_page(page_number)
+        # Add the new info to the context
+        context['review_list'] = page_obj
+        context['page_obj'] = page_obj
+        context['is_paginated'] = page_obj.has_other_pages()
         context['page_title'] = get_page_title('details', self.get_object().product_name)
         context['photo_list'] = ProductPhoto.objects.filter(photo_related_product=self.get_object().id)
         return context
