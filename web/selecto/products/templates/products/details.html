@@ -46,6 +46,8 @@
             </div>
         {% endfor %}
     </div>
+    <h4><a class="page-link" href="{% url 'products:review_list' product.id %}">See All Reviews</a></h4>
+    
     {% if is_paginated %}
         <div class="pagination justify-content-center mt-3 mb-3">
             <span class="step-links">

@@ -92,6 +92,25 @@ class ProductDetailView(generic.DetailView):
         context['photo_list'] = ProductPhoto.objects.filter(photo_related_product=self.get_object().id)
         return context
 
+class ReviewListView(generic.ListView):
+    model = Review
+    context_object_name = 'review_list'
+    template_name = 'products/product_reviews'
+    paginate_by = 5
+    product_id = None
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.product_id = self.kwargs['product_id']
+        queryset = queryset.filter(review_related_product=self.product_id)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = get_page_title('review_list', Product.objects.get(id=self.product_id).product_name)
+        context['product_id'] = self.product_id
+        return context
+
 class ReviewDetailView(generic.DetailView):
     model = Review
     content_object_name = 'review'
