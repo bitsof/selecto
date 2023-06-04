@@ -1,5 +1,44 @@
 <!-- This, along with any other {} are part of the template language -->
 {% extends 'products/header.html' %}
+{% load static %}
 
 {% block content %}
+    <h1 class="ms-4">Index</h1>
+    {% for product in product_list %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if product.first_photo_url %}
+                        <img src="{{ product.first_photo_url }}" class="img-fluid rounded-start" alt="{{ product.product_name }}">
+                    {% else %}
+                        <img src="{% static 'images/placeholder.png' %}" class="img-fluid rounded-start" alt="{{ product.product_name }}">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <a href="{% url 'products:details' product.id %}" class="card-link text-decoration-none" style="color: inherit;">
+                            <h5 class="card-title">{{ product.product_name }}</h5>
+                        </a>
+                        <p class="card-text">{{ product.product_description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+    <nav class="d-flex justify-content-center mt-2 mb-2" aria-label="Pages">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if page_obj.number == 1 %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ page_obj.number|add:"-1" }}">Previous</a>
+            </li>
+            {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endfor %}
+            <li class="page-item {% if page_obj.number == page_obj.paginator.page_range|last %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ page_obj.number|add:"1" }}">Next</a>
+            </li>
+        </ul>
+    </nav>
 {% endblock %}
