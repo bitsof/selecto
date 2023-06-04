@@ -80,7 +80,7 @@ SOCIALACCOUNT_PROVIDERS = {
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -144,7 +144,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-STATICFILES_DIRS = [BASE_DIR / "static"]  
+STATICFILES_DIRS = [BASE_DIR / "static"]
 # The URL to use when referring to static files (where they will be served from)
 STATIC_ROOT = BASE_DIR / "staticfiles" 
 # Default setting is "django.contrib.staticfiles.storage.StaticFilesStorage"
