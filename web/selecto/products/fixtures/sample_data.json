@@ -1,0 +1,220 @@
+[
+    {
+      "model": "products.product",
+      "pk": 1,
+      "fields": {
+        "product_name": "Basic Product with short description 1 long review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 1,
+      "fields": {
+        "review_content": "This is a sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2023-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 2,
+      "fields": {
+        "review_content": "This is another sample review, but this one is much longer.\nJOHN, by the grace of God King of England, Lord of Ireland, Duke of Normandy and Aquitaine, and Count of Anjou, to his archbishops, bishops, abbots, earls, barons, justices, foresters, sheriffs, stewards, servants, and to all his officials and loyal subjects, Greeting.\nKNOW THAT BEFORE GOD, for the health of our soul and those of our ancestors and heirs, to the honour of God, the exaltation of the holy Church, and the better ordering of our kingdom, at the advice of our reverend fathers Stephen, archbishop of Canterbury, primate of all England, and cardinal of the holy Roman Church, Henry archbishop of Dublin, William bishop of London, Peter bishop of Winchester, Jocelin bishop of Bath and Glastonbury, Hugh bishop of Lincoln, Walter bishop of Worcester, William bishop of Coventry, Benedict bishop of Rochester, Master Pandulf subdeacon and member of the papal household, Brother Aymeric master of the knighthood of the Temple in England, William Marshal earl of Pembroke, William earl of Salisbury, William earl of Warren, William earl of Arundel, Alan of Galloway constable of Scotland, Warin fitz Gerald, Peter fitz Herbert, Hubert de Burgh seneschal of Poitou, Hugh de Neville, Matthew fitz Herbert, Thomas Basset, Alan Basset, Philip Daubeny, Robert de Roppeley, John Marshal, John fitz Hugh, and other loyal subjects:\n (1) FIRST, THAT WE HAVE GRANTED TO GOD, and by this present charter have confirmed for us and our heirs in perpetuity, that the English Church shall be free, and shall have its rights undiminished, and its liberties unimpaired. That we wish this so to be observed, appears from the fact that of our own free will, before the outbreak of the present dispute between us and our barons, we granted and confirmed by charter the freedom of the Church's elections - a right reckoned to be of the greatest necessity and importance to it - and caused this to be confirmed by Pope Innocent III. This freedom we shall observe ourselves, and desire to be observed in good faith by our heirs in perpetuity.\nTO ALL FREE MEN OF OUR KINGDOM we have also granted, for us and our heirs for ever, all the liberties written out below, to have and to keep for them and their heirs, of us and our heirs:",
+        "review_related_product": 1,
+        "review_publish_date": "2023-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 3,
+      "fields": {
+        "review_content": "This is another sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2023-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 4,
+      "fields": {
+        "review_content": "This is another sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2023-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 5,
+      "fields": {
+        "review_content": "This is another sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2022-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 6,
+      "fields": {
+        "review_content": "This is another sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2022-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 7,
+      "fields": {
+        "review_content": "This is another sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2022-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 8,
+      "fields": {
+        "review_content": "This is another sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2022-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.review",
+      "pk": 9,
+      "fields": {
+        "review_content": "This is another sample review.",
+        "review_related_product": 1,
+        "review_publish_date": "2022-04-20T12:00:00Z"
+      }
+    },
+    {
+      "model": "products.productphoto",
+      "pk": 1,
+      "fields": {
+        "photo_url": "https://m.media-amazon.com/images/I/81dkWDxetjL._AC_UX679_.jpg",
+        "photo_related_product": 1
+      }
+    },
+    {
+      "model": "products.productphoto",
+      "pk": 2,
+      "fields": {
+        "photo_url": "https://m.media-amazon.com/images/I/61TzK204IjL._AC_SY300_SX300_.jpg",
+        "photo_related_product": 1
+      }
+    },
+    {
+      "model": "products.productphoto",
+      "pk": 3,
+      "fields": {
+        "photo_url": "https://m.media-amazon.com/images/I/61i7mFwESLL._AC_SX569_.jpg",
+        "photo_related_product": 1
+      }
+    },
+    {
+      "model": "products.productphoto",
+      "pk": 4,
+      "fields": {
+        "photo_url": "https://cdn.britannica.com/12/1812-004-CB8890E0/John-of-England-illumination.jpg",
+        "photo_related_product": 1
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 2,
+      "fields": {
+        "product_name": "Basic Product with long description 1 small picture",
+        "product_description": "This is a long description, this also has a couple reviews (5) For so long as a guardian has guardianship of such land, he shall maintain the houses, parks, fish preserves, ponds, mills, and everything else pertaining to it, from the revenues of the land itself. When the heir comes of age, he shall restore the whole land to him, stocked with plough teams and such implements of husbandry as the season demands and the revenues from the land can reasonably bear.\n(6) Heirs may be given in marriage, but not to someone of lower social standing. Before a marriage takes place, it shall be made known to the heir's next-of-kin.\n(7) At her husband's death, a widow may have her marriage portion and inheritance at once and without trouble. She shall pay nothing for her dower, marriage portion, or any inheritance that she and her husband held jointly on the day of his death. She may remain in her husband's house for forty days after his death, and within this period her dower shall be assigned to her.\n(8) No widow shall be compelled to marry, so long as she wishes to remain without a husband. But she must give security that she will not marry without royal consent, if she holds her lands of the Crown, or without the consent of whatever other lord she may hold them of.\n(9) Neither we nor our officials will seize any land or rent in payment of a debt, so long as the debtor has movable goods sufficient to discharge the debt. A debtor's sureties shall not be distrained upon so long as the debtor himself can discharge his debt. If, for lack of means, the debtor is unable to discharge his debt, his sureties shall be answerable for it. If they so desire, they may have the debtor's lands and rents until they have received satisfaction for the debt that they paid for him, unless the debtor can show that he has settled his obligations to them.\n(10) If anyone who has borrowed a sum of money from Jews dies before the debt has been repaid, his heir shall pay no interest on the debt for so long as he remains under age, irrespective of whom he holds his lands. If such a debt falls into the hands of the Crown, it will take nothing except the principal sum specified in the bond.\n(11) If a man dies owing money to Jews, his wife may have her dower and pay nothing towards the debt from it. If he leaves children that are under age, their needs may also be provided for on a scale appropriate to the size of his holding of lands. The debt is to be paid out of the residue, reserving the service due to his feudal lords. Debts owed to persons other than Jews are to be dealt with similarly."
+      }
+    },
+    {
+      "model": "products.productphoto",
+      "pk": 5,
+      "fields": {
+        "photo_url": "https://cdn.britannica.com/12/1812-004-CB8890E0/John-of-England-illumination.jpg",
+        "photo_related_product": 2
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 3,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 4,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 5,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 6,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 7,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 8,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 9,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 10,
+      "fields": {
+        "product_name": "Basic Product without image or review",
+        "product_description": "This is a short description, this also has a couple reviews"
+      }
+    },
+    {
+      "model": "products.store",
+      "pk": 1,
+      "fields": {
+        "store_name": "Sample Store",
+        "store_url_home": "https://example.com/sample-store"
+      }
+    },
+    {
+      "model": "products.storelink",
+      "pk": 1,
+      "fields": {
+        "store_link_url": "https://example.com/sample-product-store-link",
+        "store_link_related_product": 1,
+        "store_link_store": 1
+      }
+    }
+  ]

@@ -10,6 +10,9 @@ def get_page_title(*args):
             case 'details':
                 page_title += ' - ' + args[1]
 
+            case 'review_list':
+                page_title += ' - ' + args[1] + ' - Reviews'
+
             case 'review_details':
                 page_title += ' - ' + args[1] + ' - Review'
             
@@ -27,6 +30,5 @@ def get_page_title(*args):
 
         return page_title
     
-    except TypeError:
-        print('type error')
+    except (TypeError, IndexError) as e:
         return page_title

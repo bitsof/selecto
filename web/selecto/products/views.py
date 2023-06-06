@@ -3,9 +3,11 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.views.generic.edit import CreateView
 from django.views import generic
 from django.urls import reverse_lazy
+from django.db import models
 from .models import Product, Review, ProductPhoto
 from .forms import CustomUserCreationForm
 from random import randint
@@ -51,6 +53,16 @@ class ProductListView(generic.ListView):
     model = Product
     context_object_name = 'product_list'
     template_name = 'products/index.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        # Fetch all products with their first photo
+        queryset = super().get_queryset().prefetch_related('productphoto_set')
+        # Annotate each product with the first photo
+        queryset = queryset.annotate(first_photo_url=models.Subquery(
+            ProductPhoto.objects.filter(photo_related_product=models.OuterRef('pk')).values('photo_url')[:1]
+        ))
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
@@ -64,9 +76,39 @@ class ProductDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['review_list'] = Review.objects.filter(review_related_product=self.get_object().id)
+        # Paginates the review_list
+        review_queryset = Review.objects.filter(review_related_product=self.get_object().id)
+        # Create a Paginator instance
+        paginator = Paginator(review_queryset, per_page=2)
+        # Get the current page number from the request
+        page_number = self.request.GET.get('page')
+        # Get the Page object for the current page
+        page_obj = paginator.get_page(page_number)
+        # Add the new info to the context
+        context['review_list'] = page_obj
+        context['page_obj'] = page_obj
+        context['is_paginated'] = page_obj.has_other_pages()
         context['page_title'] = get_page_title('details', self.get_object().product_name)
         context['photo_list'] = ProductPhoto.objects.filter(photo_related_product=self.get_object().id)
+        return context
+
+class ReviewListView(generic.ListView):
+    model = Review
+    context_object_name = 'review_list'
+    template_name = 'products/product_reviews'
+    paginate_by = 5
+    product_id = None
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.product_id = self.kwargs['product_id']
+        queryset = queryset.filter(review_related_product=self.product_id)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = get_page_title('review_list', Product.objects.get(id=self.product_id).product_name)
+        context['product_id'] = self.product_id
         return context
 
 class ReviewDetailView(generic.DetailView):

@@ -1,0 +1,23 @@
+{% extends 'rest_framework/base.html' %}
+{% load static %}
+
+
+{% block head %}
+    {% block style %}
+        {% block bootstrap_theme %}
+            <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/bootstrap.min.css" %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/bootstrap-tweaks.css" %}"/>
+        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/prettify.css" %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/default.css" %}"/>
+        {% if code_style %}<style> {{ code_style }} </style>{% endif %}
+
+        <link rel="stylesheet" type="text/css" href="{% static "css/restframework-override.css" %}"/>
+
+    {% endblock %}
+{% endblock %}
+
+
+{% block navbar %}
+    {% include 'products/header.html' %}
+{% endblock %}

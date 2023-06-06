@@ -1,36 +1,57 @@
 {% extends 'products/header.html' %}
+{% load pagination_tags %}
 
 {% block content %}
-  <div class="product-details">
-    <h1>{{ product.product_name }}</h1>
-    <p>{{ product.product_description }}</p>
-  </div>
+    <div class="clearfix">
+        {% if photo_list|length > 0 %}
+            <div id="carouselPhotos" class="carousel slide col-md-6 float-md-end mb-3 ms-md-3">
+                <div class="carousel-indicators">
+                    {% for photo in photo_list %}
+                        <button type="button" data-bs-target="#carouselPhotos" data-bs-slide-to="{{ forloop.counter|add:"-1" }}" 
+                            {% if forloop.counter == forloop.counter %} class="active" aria-current="true" {% endif %} 
+                            aria-label="Slide {{ forloop.counter }}">
+                        </button>
+                    {% endfor %}
+                </div>
+                <div class="carousel-inner">
+                    {% for photo in photo_list %}
+                        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                            <img src="{{ photo.photo_url }}" class="d-block w-100" alt="{{ product.product_name }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPhotos" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselPhotos" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        {% endif %}
+        <h1>{{ product.product_name }}</h1>
+        <p>
+            {{ product.product_description }}
+        </p>
+    </div>
 
-  <div class="reviews">
     <h2>Reviews</h2>
-    <ul>
-      {% for review in review_list %}
-        <li><a href="{% url 'products:review_details' product.id review.id %}">{{ review.review_content }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  {% for photo in photo_list %}
-    <div class="photo-list">
-      <img src="{{ photo.photo_url }}" alt="{{ product.product_name }}">
+    <div class="list-group">
+        {% for review in review_list %}
+            <div class="list-group-item">
+                <p class="mb-1">{{ review.review_content }}</p>
+                <p class="mb-0">
+                    <small class="text-muted">Posted {{ review.review_publish_date }}</small>
+                </p>
+            </div>
+        {% endfor %}
     </div>
-  {% endfor %}
-
-  {% if youtube_video_id|length > 0 %}
-    <div class="embedded-link">
-      <iframe width="420" height="315"
-        src="https://www.youtube.com/embed/{{ youtube_video_id }}">
-      </iframe>
-    </div>
-  {% endif %}
-
-  <div class="return-link">
-    <a href="{% url 'products:index' %}">&lt;&lt; Return to Products List</a>
-  </div>
+    <h4><a class="page-link" href="{% url 'products:review_list' product.id %}">See All Reviews</a></h4>
+    
+    {% if is_paginated %}
+        {% pagination_links_reviews page_obj %}
+    {% endif %}
+    
 {% endblock %}
 

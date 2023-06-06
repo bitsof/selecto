@@ -8,6 +8,9 @@ def test_get_page_title_index():
 def test_get_page_title_details():
     assert get_page_title('details', 'Product 1') == 'Selecto - Product 1'
 
+def test_get_page_title_review_list():
+    assert get_page_title('review_list', 'Product 1') == 'Selecto - Product 1 - Reviews'
+
 def test_get_page_title_review_details():
     assert get_page_title('review_details', 'Product 1') == 'Selecto - Product 1 - Review'
 

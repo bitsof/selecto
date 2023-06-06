@@ -1,30 +1,4 @@
 {% extends 'products/header.html' %}
 
 {% block content %}
-    <div class="review">
-        <a href="{% url 'products:details' review.review_related_product.id %}">
-            <button class="btn btn-outline-primary mb-3">Return to Product Page</button>
-        </a>
-        <p class="review-content">{{ review.review_content }}</p>
-        <p class="review-publish-date">Published on {{ review.review_publish_date|date:"F j, Y" }}</p>
-        <form action="#" method="get">
-            <input type="text" name="mytextbox" size="10"/>
-            <input type="submit" class="btn" value="Define" name="define">
-            {% if test > 0 %}
-                <p>{{ test }}</p>
-            {% endif %}
-        </form>
-        {% if definition|length > 0 %}
-            <p>{{ definition }}</p>
-        {% endif %}
-        {% if review.review_content|length > 200 %}
-        <form action="#" method="get">
-            <input type="submit" class="btn" value="Summarize" name="summarize">
-        </form>
-        {% endif %}
-        {% if summary|length > 0 %}
-            <p>{{ summary }}</p>
-        {% endif %}
-    </div>
-    
 {% endblock %}

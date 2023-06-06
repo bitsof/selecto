@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('index/', views.ProductListView.as_view(), name='index'),
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='details'),
+    path('products/<int:product_id>/reviews/', views.ReviewListView.as_view(), name='review_list'),
     path('products/<int:product_id>/reviews/<int:pk>/', views.ReviewDetailView.as_view(), name='review_details'),
     path('contact_us/', views.contact_us, name='contact_us'),
     path('about_us/', views.about_us, name='about_us'),
@@ -21,7 +22,7 @@ urlpatterns = [
     path('api/reviews/<int:pk>/', views.ApiReviewDetail.as_view(), name='api_review_details'),
     path('api/users/', views.UserList.as_view(), name='api_user_list'),
     path('api/users/<int:pk>/', views.UserDetail.as_view(), name='api_user_details'),
-    path('api/', views.api_root),
+    path('api/', views.api_root, name='api'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

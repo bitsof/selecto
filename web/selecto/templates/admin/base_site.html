@@ -1,0 +1,14 @@
+{% extends 'admin/base.html' %}
+
+{% block header %}
+    {% include 'products/header.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div id="content-main">
+            <!-- Content of the admin page -->
+            {{ block.super }}
+        </div>
+    </div>
+{% endblock %}
