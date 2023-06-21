@@ -57,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.contrib.auth.urls",
 ]
 
 ROOT_URLCONF = "selecto.urls"
@@ -100,17 +101,13 @@ WSGI_APPLICATION = "selecto.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
-    'users': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'selecto_users_db',
+        'NAME': 'users',
         'USER': 'kevin',
         'PASSWORD': POSTGRESQL_PW,
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+    },
 }
 
 

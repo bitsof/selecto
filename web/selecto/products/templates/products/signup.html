@@ -96,7 +96,7 @@
             <a href="{% provider_login_url 'google' process='login' %}?next={{ request.GET.next|urlencode }}}">Log in with Google</a>
         </div>
         <div class="container">
-            <form method="post">
+            <form method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="{{ form.username.id_for_label }}">Username:</label>
