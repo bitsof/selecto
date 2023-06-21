@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/users/', views.UserList.as_view(), name='api_user_list'),
     path('api/users/<int:pk>/', views.UserDetail.as_view(), name='api_user_details'),
     path('api/', views.api_root),
+    path('signup/', views.signup, name='signup'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -44,9 +44,7 @@ class StoreLink(models.Model):
     store_link_url = models.URLField()
     store_link_related_product = models.ForeignKey(Product, on_delete=models.CASCADE)
     store_link_store =  models.ForeignKey(Store, on_delete=models.CASCADE)
-
     class Meta:
         # orders by the primary key
         ordering = ['pk']
-
-
+    

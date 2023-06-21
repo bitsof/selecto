@@ -26,6 +26,15 @@
             width: 100%;
         }
 
+
+        .sign-up-redirect {
+            margin-top: 25px;
+            font-size: 12px;
+        }
+
+        .sign-up-redirect a {
+            color: rgb(0, 76, 255);
+        }
         .form-group {
             display: flex;
             flex-direction: column;
@@ -34,6 +43,9 @@
 
         label {
             font-weight: bold;
+            margin-top: 5px;
+            font-size: 14px;
+            color: rgb(41, 39, 39);
         }
 
         input {
@@ -41,15 +53,18 @@
             border: 1px solid #ccc;
             border-radius: 3px;
             margin-top: 5px;
+            margin-bottom: 5px;
+            height: 27px;
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: #1f8fd0;
             color: white;
             padding: 10px;
             border: none;
             border-radius: 3px;
             cursor: pointer;
+            width: 100%;
         }
 
         .error-message {
@@ -92,6 +107,10 @@
                 <button type="submit" name="submit">Login</button>
                 
               </form>
+            </div>
+            <div class="sign-up-redirect">
+                Don't have an account? 
+                <a href="{% url 'products:signup' %}"> Sign up</a>
             </div>
           </div>
     </div>
