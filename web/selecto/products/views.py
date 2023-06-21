@@ -6,13 +6,14 @@ from django.views import generic
 from django.contrib.auth import logout, authenticate, login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .models import Product, Review
 from .forms import SignUpForm
+from .models import Product, Review, ProductPhoto
 from random import randint
 from config import GOOGLE_CLIENT_ID
 from . import openai_module
 from products.serializers import ProductSerializer, ReviewSerializer, UserSerializer
 from rest_framework import generics, renderers, permissions
+from .permissions import IsAdminOrReadOnly
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -75,6 +76,7 @@ class ProductDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['review_list'] = Review.objects.filter(review_related_product=self.get_object().id)
         context['page_title'] = get_page_title('details', self.get_object().product_name)
+        context['photo_list'] = ProductPhoto.objects.filter(photo_related_product=self.get_object().id)
         return context
 
 class ReviewDetailView(generic.DetailView):
@@ -135,22 +137,22 @@ PUT, PATCH, and DELETE requests.
 class ApiProductList(generics.ListCreateAPIView):
     queryset = get_all_products()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class ApiProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_all_products()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class ApiReviewList(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class ApiReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
 class UserList(generics.ListAPIView):
     # While the other classes had models whose ordering was defined through

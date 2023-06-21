@@ -11,3 +11,4 @@ db.sqlite3
 .vscode
 *.env
 web/selecto/users.sql
+web/selecto/staticfiles
