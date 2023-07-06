@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from config import DEBUG_SETTING, DJANGO_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY, POSTGRESQL_DB_NAME, POSTGRESQL_USER, POSTGRESQL_PW
+from config import DEBUG_SETTING, DJANGO_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY, POSTGRESQL_DB_NAME, POSTGRESQL_USER, POSTGRESQL_PW, POSTGRESQL_HOST, POSTGRESQL_PORT
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -106,8 +106,8 @@ DATABASES = {
         'NAME': POSTGRESQL_DB_NAME,
         'USER': POSTGRESQL_USER,
         'PASSWORD': POSTGRESQL_PW,
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': POSTGRESQL_HOST,
+        'PORT': POSTGRESQL_PORT,
     },
 }
 
