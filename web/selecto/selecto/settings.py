@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from config import DEBUG_SETTING, DJANGO_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY, POSTGRESQL_PW
+from config import DEBUG_SETTING, DJANGO_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY, POSTGRESQL_DB_NAME, POSTGRESQL_USER, POSTGRESQL_PW
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -98,12 +98,13 @@ WSGI_APPLICATION = "selecto.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+# Changes database from using sqlite to using a postgresql
 
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'users',
-        'USER': 'kevin',
+        'NAME': POSTGRESQL_DB_NAME,
+        'USER': POSTGRESQL_USER,
         'PASSWORD': POSTGRESQL_PW,
         'HOST': 'localhost',
         'PORT': '5432',
