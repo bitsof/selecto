@@ -193,7 +193,7 @@ class TestApi:
         assert response.status_code == status.HTTP_403_FORBIDDEN
   
     def test_api_review_detail_get(self, client, product, review):
-        url = reverse('products:api_review_details', kwargs={'pk': 1})
+        url = reverse('products:api_review_details', kwargs={'pk': review.pk})
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert 'test review' in response.data['review_content']

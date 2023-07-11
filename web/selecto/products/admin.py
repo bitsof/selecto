@@ -3,7 +3,7 @@ from django.forms import ModelForm, DateTimeInput, DateTimeField
 
 # Register your models here.
 
-from .models import Product, Review, ProductPhoto, Store, StoreLink
+from .models import Product, Review, ProductPhoto, Store, StoreLink, SelectoUser
 
 admin.site.register(Product)
 
@@ -26,3 +26,4 @@ class ReviewAdmin(admin.ModelAdmin):
 admin.site.register(ProductPhoto)
 admin.site.register(Store)
 admin.site.register(StoreLink)
+admin.site.register(SelectoUser)
