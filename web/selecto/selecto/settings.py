@@ -100,23 +100,24 @@ WSGI_APPLICATION = "selecto.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # Changes database from using sqlite to using a postgresql
 
-DATABASES = {
-    "default": {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': POSTGRESQL_DB_NAME,
-        'USER': POSTGRESQL_USER,
-        'PASSWORD': POSTGRESQL_PW,
-        'HOST': POSTGRESQL_HOST,
-        'PORT': POSTGRESQL_PORT,
-    },
-}
-
-if 'test' in sys.argv:
+if any('pytest' in arg for arg in sys.argv):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': ':memory:',
         }
+    }
+
+else: 
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': POSTGRESQL_DB_NAME,
+            'USER': POSTGRESQL_USER,
+            'PASSWORD': POSTGRESQL_PW,
+            'HOST': POSTGRESQL_HOST,
+            'PORT': POSTGRESQL_PORT,
+        },
     }
 
 
